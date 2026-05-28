@@ -1,0 +1,16 @@
+{
+  "name": "Your Uni-Verse",
+  "short_name": "Uni-Verse",
+  "description": "South Africa's first educational decision intelligence platform.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#03050E",
+  "theme_color": "#3D7FFF",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
