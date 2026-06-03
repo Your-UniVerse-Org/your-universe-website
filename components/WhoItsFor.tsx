@@ -1,68 +1,130 @@
 "use client";
+
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { PersonasGraphic } from "./SectionGraphics";
 import { useLang } from "./LanguageContext";
 
-const an = (d: number, inView: boolean) => ({
-  initial: { opacity: 0, y: 24 },
-  animate: inView ? { opacity: 1, y: 0 } : {},
-  transition: { duration: 0.65, delay: d, ease: "easeOut" as const },
-});
-
-const PERSONA_TAGS = [
-  ["NSC · IEB", "University benchmarks", "Subject coaching"],
-  ["Transition support", "Habit building", "Module structure"],
-  ["Deep focus", "Research scaffolding", "Milestone tracking"],
-];
+const PERSONAS = [
+  {
+    key:   "p1",
+    icon:  (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+      </svg>
+    ),
+  },
+  {
+    key:   "p2",
+    icon:  (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"/><path d="M12 16v-4M12 8h.01"/>
+      </svg>
+    ),
+  },
+  {
+    key:   "p3",
+    icon:  (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+      </svg>
+    ),
+  },
+] as const;
 
 export default function WhoItsFor() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
   const { t } = useLang();
-
-  const PERSONAS = [
-    { title: t("who_p1_title"), quote: t("who_p1_quote"), body: t("who_p1_body"), tags: PERSONA_TAGS[0] },
-    { title: t("who_p2_title"), quote: t("who_p2_quote"), body: t("who_p2_body"), tags: PERSONA_TAGS[1] },
-    { title: t("who_p3_title"), quote: t("who_p3_quote"), body: t("who_p3_body"), tags: PERSONA_TAGS[2] },
-  ];
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-12%" });
 
   return (
-    <section id="who-its-for" style={{ background: "var(--surface)", position: "relative" }}>
-      <div className="section">
-        <div className="container" ref={ref}>
-          <div className="sg-row" style={{ marginBottom: 64 }}>
-            <div className="sg-col">
-              <motion.p {...an(0.05, inView)} className="label" style={{ marginBottom: 16 }}>{t("who_label")}</motion.p>
-              <motion.h2 {...an(0.15, inView)} className="display-2">{t("who_h2")}</motion.h2>
-              <motion.p {...an(0.25, inView)} className="body-lg" style={{ marginTop: 20 }}>{t("who_sub")}</motion.p>
-            </div>
-            <motion.div {...an(0.1, inView)}><PersonasGraphic /></motion.div>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
-            {PERSONAS.map((p, i) => (
-              <motion.div key={i} {...an(0.2 + i * 0.12, inView)} className="card"
-                style={{ padding: "40px 36px", display: "flex", flexDirection: "column", gap: 24 }}>
-                <div>
-                  <h3 className="h3" style={{ marginBottom: 12 }}>{p.title}</h3>
-                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, fontStyle: "italic", color: "var(--violet-text)", lineHeight: 1.55 }}>
-                    &ldquo;{p.quote}&rdquo;
-                  </p>
-                </div>
-                <div style={{ borderTop: "1px solid var(--border)", paddingTop: 24 }}>
-                  <p className="body" style={{ marginBottom: 20 }}>{p.body}</p>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                    {p.tags.map((tag) => (
-                      <span key={tag} style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--text-3)", background: "var(--surface-2)", border: "1px solid var(--border)", padding: "4px 10px", borderRadius: 100 }}>{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+    <section
+      ref={ref}
+      id="who-its-for"
+      className="section"
+      aria-labelledby="who-heading"
+      style={{ background: "var(--surface)", borderTop: "1px solid var(--border)" }}
+    >
+      <div className="container">
+
+        {/* Header */}
+        <div style={{ maxWidth: 640, marginBottom: 72 }}>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="label" style={{ marginBottom: 20 }}
+          >
+            {t("who_label")}
+          </motion.p>
+          <motion.h2
+            id="who-heading"
+            initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.65, delay: 0.1 }}
+            className="display-2" style={{ marginBottom: 20 }}
+          >
+            {t("who_h2")}
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="body-lg"
+          >
+            {t("who_sub")}
+          </motion.p>
+        </div>
+
+        {/* Persona cards */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(320px, 100%), 1fr))",
+            gap: 20,
+          }}
+          role="list"
+        >
+          {PERSONAS.map((p, i) => (
+            <motion.div
+              key={p.key}
+              role="listitem"
+              initial={{ opacity: 0, y: 28 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.3 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+              className="grad-border"
+              style={{ padding: "36px 32px" }}
+            >
+              {/* Icon */}
+              <div className="icon-box" style={{ marginBottom: 24 }} aria-hidden="true">
+                {p.icon}
+              </div>
+
+              {/* Title */}
+              <h3 className="h3" style={{ marginBottom: 16 }}>
+                {t(`who_${p.key}_title` as Parameters<typeof t>[0])}
+              </h3>
+
+              {/* Quote */}
+              <blockquote
+                style={{
+                  fontFamily: "'Instrument Serif', Georgia, serif",
+                  fontStyle: "italic",
+                  fontSize: "clamp(15px, 1.5vw, 18px)",
+                  color: "var(--text-1)",
+                  lineHeight: 1.5,
+                  paddingLeft: 16,
+                  borderLeft: "2px solid var(--purple)",
+                  marginBottom: 20,
+                }}
+              >
+                &ldquo;{t(`who_${p.key}_quote` as Parameters<typeof t>[0])}&rdquo;
+              </blockquote>
+
+              {/* Body */}
+              <p className="body">
+                {t(`who_${p.key}_body` as Parameters<typeof t>[0])}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </div>
-      <div className="section-divider" />
     </section>
   );
 }

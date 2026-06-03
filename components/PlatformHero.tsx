@@ -23,7 +23,7 @@ export default function PlatformHero() {
           transform: "translateX(-50%)",
           width: 800,
           height: 400,
-          background: "radial-gradient(ellipse at 50% 0%, rgba(61,127,255,0.14) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse at 50% 0%, rgba(119,77,255,0.14) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -49,8 +49,7 @@ export default function PlatformHero() {
               style={{ marginBottom: 24 }}
             >
               {t("plat_page_h1_1")}{" "}
-              <span className="text-gradient text-italic">{t("plat_page_h1_2")}</span>{" "}
-              learner
+              <span className="text-gradient">{t("plat_page_h1_2")}</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 16 }}

@@ -1,292 +1,207 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useId } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  radius: number;
-  alpha: number;
-  color: string;
-}
+/**
+ * LoadingScreen — Ultra-premium, classy intro animation
+ *
+ * Design language: Dark navy dominates. The orbital logo mark fills
+ * with a cool silver-to-purple gradient (bottom to top) — controlled,
+ * sophisticated, like Apple / Linear. No text pulsing, no noise.
+ * A single hairline progress trace. Clean exit.
+ */
 
-const COLORS = [
-  "rgba(61,127,255,",
-  "rgba(110,173,255,",
-  "rgba(167,139,250,",
-  "rgba(240,165,0,",
-];
+/* ── Official orbital icon mark path (from /public/DARK BLUE LOGO.svg) ── */
+const ICON_PATH =
+  "M1263.44 418.396C1201.16 426.635 1140.28 452.278 1091.7 490.728C1066.42 510.732 1039.68 536.026 1032.26 546.931C996.132 600.03 995.329 607.293 992.679 906.155C991.292 1062.54 993.069 1193.15 996.615 1196.41C1003.95 1203.14 1635.19 1203.97 1649.46 1197.28C1655.62 1194.38 1658.04 1114.94 1657.83 922.32C1657.55 674.17 1656.24 647.466 1642.29 604.052C1611.15 507.125 1521.67 440.816 1394.57 420.498C1336.13 411.157 1320.1 410.896 1263.44 418.396ZM1442.39 472.134C1520.65 499.389 1584.05 559.051 1593.57 614.401C1598.41 642.502 1604.8 637.995 1498.76 681.266L1451.44 700.577L1442.11 666.238C1430.31 622.807 1383.18 572.989 1327.16 544.734C1272.8 517.308 1251.27 511.313 1191.45 506.965L1140.79 503.286L1162.12 492.322C1173.85 486.292 1203.66 474.883 1228.37 466.963C1289.62 447.332 1377.26 449.453 1442.39 472.134ZM1271.68 564.045C1345.22 594.356 1401.64 654.237 1401.81 702.177C1401.88 720.35 1398.23 724.621 1375.59 732.825L1349.29 742.356L1344.38 715.149C1332.27 647.999 1239.92 579.316 1142.06 564.684L1094.12 557.517L1117.45 549.585C1152.47 537.685 1224 544.396 1271.68 564.045ZM1170.96 611.99C1189.72 618.293 1219.75 633.546 1237.73 645.885C1297.69 687.06 1296.13 680.082 1296.42 906.949L1296.67 1109.14L1253.81 1112.61C1230.23 1114.52 1174.11 1125.46 1129.1 1136.91C1084.09 1148.37 1046.25 1157.78 1045.02 1157.82C1039.13 1158.04 1048.16 608.928 1054.17 601.843C1063.27 591.103 1124.73 596.447 1170.96 611.99ZM1601.4 923.144L1601.43 1162.27L1577.65 1154.67L1553.87 1147.07L1551.83 928.019L1549.79 708.971L1575.21 696.597C1589.19 689.79 1600.8 684.175 1601 684.121C1601.2 684.068 1601.38 791.629 1601.4 923.144ZM1500.95 926.858L1501.73 1128.23L1481.04 1124.39C1469.66 1122.27 1457.8 1117.62 1454.69 1114.05C1451.59 1110.48 1449 1025.66 1448.96 925.555L1448.86 743.553L1470.19 734.756C1481.92 729.917 1493.47 725.853 1495.85 725.723C1498.22 725.592 1500.52 816.105 1500.95 926.858ZM1401.63 929.067C1401.94 1018.23 1400 1095.53 1397.31 1100.85C1394.35 1106.71 1383.54 1110.52 1369.88 1110.52H1347.33V948.692V786.872L1372.66 777.288C1386.59 772.022 1398.69 767.537 1399.54 767.33C1400.38 767.123 1401.33 839.9 1401.63 929.067Z";
 
-export default function LoadingScreen({ onComplete }: { onComplete: () => void }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [progress, setProgress] = useState(0);
-  const [phase, setPhase] = useState<"loading" | "reveal" | "exit">("loading");
-  const particlesRef = useRef<Particle[]>([]);
-  const animFrameRef = useRef<number>(0);
+/* Icon bounding box within 2651×1615 viewBox */
+const B = { x: 992, y: 411, w: 666, h: 793 };
 
-  /* ── Canvas particle field ── */
+export default function LoadingScreen({ onComplete }: { onComplete?: () => void }) {
+  const [show, setShow] = useState(true);
+  const uid = useId().replace(/:/g, "");
+  const clipId  = `lc-${uid}`;
+  const gradId  = `lg-${uid}`;
+  const glowId  = `gw-${uid}`;
+
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const count = Math.min(120, Math.floor(window.innerWidth / 10));
-    particlesRef.current = Array.from({ length: count }, () => ({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
-      radius: Math.random() * 1.8 + 0.3,
-      alpha: Math.random() * 0.6 + 0.1,
-      color: COLORS[Math.floor(Math.random() * COLORS.length)],
-    }));
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particlesRef.current.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `${p.color}${p.alpha})`;
-        ctx.fill();
-      });
-
-      // Draw connecting lines between nearby particles
-      for (let i = 0; i < particlesRef.current.length; i++) {
-        for (let j = i + 1; j < particlesRef.current.length; j++) {
-          const a = particlesRef.current[i];
-          const b = particlesRef.current[j];
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(61,127,255,${0.06 * (1 - dist / 120)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      }
-
-      animFrameRef.current = requestAnimationFrame(draw);
-    };
-    draw();
-
-    return () => {
-      window.removeEventListener("resize", resize);
-      cancelAnimationFrame(animFrameRef.current);
-    };
+    /* Slightly longer than the fill animation so it completes visually */
+    const t = setTimeout(() => setShow(false), 3000);
+    return () => clearTimeout(t);
   }, []);
 
-  /* ── Progress simulation ── */
-  useEffect(() => {
-    let current = 0;
-    // Progress completes in ~1.2s (30ms × ~40 ticks @ 2.8 inc/tick)
-    const interval = setInterval(() => {
-      current += Math.random() * 3.5 + 2.0;
-      if (current >= 100) {
-        current = 100;
-        setProgress(100);
-        clearInterval(interval);
-        setTimeout(() => setPhase("reveal"), 200);
-        setTimeout(() => setPhase("exit"), 700);
-        setTimeout(() => onComplete(), 1200);
-      } else {
-        setProgress(Math.floor(current));
-      }
-    }, 30);
-    return () => clearInterval(interval);
-  }, [onComplete]);
-
   return (
-    <AnimatePresence>
-      {phase !== "exit" && (
+      <AnimatePresence onExitComplete={() => onComplete?.()}>
+      {show && (
         <motion.div
-          key="loader"
+          key="loading"
+          role="status"
+          aria-label="Loading YourUniverse"
+          aria-live="polite"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.04 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          exit={{
+            opacity: 0,
+            transition: { duration: 0.65, ease: [0.4, 0, 1, 1] },
+          }}
           style={{
             position: "fixed",
             inset: 0,
             zIndex: 9999,
-            background: "#03050E",
+            background: "#0F172A",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            overflow: "hidden",
           }}
         >
-          {/* Particle canvas */}
-          <canvas
-            ref={canvasRef}
-            style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
+          {/* ── Noise texture overlay ── */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E")`,
+              opacity: 0.5,
+              pointerEvents: "none",
+            }}
           />
 
-          {/* Central glow */}
-          <div style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 600,
-            height: 600,
-            background: "radial-gradient(circle, rgba(61,127,255,0.12) 0%, transparent 65%)",
-            pointerEvents: "none",
-          }} />
-
-          {/* Logo + wordmark */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            style={{ position: "relative", textAlign: "center", zIndex: 1 }}
-          >
-            {/* Orbit ring */}
+          {/* ── Very subtle concentric rings ── */}
+          {[260, 320, 390].map((r, i) => (
             <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+              key={r}
+              aria-hidden="true"
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 0.06 - i * 0.015, scale: 1 }}
+              transition={{ duration: 1.2, delay: 0.1 + i * 0.15, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                width: 80,
-                height: 80,
+                position: "absolute",
+                width: r * 2,
+                height: r * 2,
                 borderRadius: "50%",
-                border: "1px solid rgba(61,127,255,0.25)",
-                borderTopColor: "rgba(61,127,255,0.8)",
-                margin: "0 auto 28px",
-                position: "relative",
+                border: "1px solid rgba(241,245,249,0.5)",
+                pointerEvents: "none",
               }}
-            >
-              {/* Inner dot */}
-              <div style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%,-50%)",
-                width: 8,
-                height: 8,
-                borderRadius: "50%",
-                background: "var(--blue)",
-                boxShadow: "0 0 16px rgba(61,127,255,0.8)",
-              }} />
-              {/* Orbit dot */}
-              <div style={{
-                position: "absolute",
-                top: -3,
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: 6,
-                height: 6,
-                borderRadius: "50%",
-                background: "#6EADFF",
-                boxShadow: "0 0 10px rgba(110,173,255,0.9)",
-              }} />
-            </motion.div>
+            />
+          ))}
 
-            <h1 style={{
-              fontFamily: "'Instrument Serif', Georgia, serif",
-              fontSize: "clamp(26px, 4vw, 40px)",
-              fontWeight: 400,
-              color: "#EDF2FF",
-              letterSpacing: "-0.02em",
-              lineHeight: 1,
-              marginBottom: 8,
-            }}>
-              Your Uni-Verse
-            </h1>
-            <p style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: 11,
-              fontWeight: 600,
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "rgba(61,127,255,0.7)",
-            }}>
-              Decision Intelligence
-            </p>
+          {/* ── Mark container ── */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.82, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: [0.34, 1.56, 0.64, 1] }}
+            style={{ position: "relative", zIndex: 1 }}
+          >
+            <svg
+              viewBox="0 0 2651 1615"
+              aria-hidden="true"
+              style={{ width: "clamp(140px, 20vw, 200px)", height: "auto" }}
+            >
+              <defs>
+                {/* Gradient for the fill: silver-white at bottom → brand purple at top */}
+                <linearGradient id={gradId} x1="0" y1="1" x2="0" y2="0">
+                  <stop offset="0%"   stopColor="#F1F5F9" stopOpacity="0.95" />
+                  <stop offset="55%"  stopColor="#A78BFF" stopOpacity="1" />
+                  <stop offset="100%" stopColor="#774DFF" stopOpacity="1" />
+                </linearGradient>
+
+                {/* Glow filter on the filled mark */}
+                <filter id={glowId} x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="18" result="blur"/>
+                  <feMerge>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+
+                {/* ClipPath: animates from bottom edge upward */}
+                <clipPath id={clipId}>
+                  <motion.rect
+                    x={B.x - 4}
+                    width={B.w + 8}
+                    initial={{ y: B.y + B.h, height: 0 }}
+                    animate={{ y: B.y, height: B.h + 4 }}
+                    transition={{
+                      duration: 1.8,
+                      delay: 0.55,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                  />
+                </clipPath>
+              </defs>
+
+              {/* Layer 1: ghost — almost invisible white outline */}
+              <path
+                d={ICON_PATH}
+                fill="#FFFFFF"
+                fillOpacity={0.055}
+                fillRule="evenodd"
+                clipRule="evenodd"
+              />
+
+              {/* Layer 2: gradient fill rising up */}
+              <path
+                d={ICON_PATH}
+                fill={`url(#${gradId})`}
+                fillRule="evenodd"
+                clipRule="evenodd"
+                clipPath={`url(#${clipId})`}
+                filter={`url(#${glowId})`}
+              />
+            </svg>
           </motion.div>
 
-          {/* Progress bar */}
+          {/* ── Wordmark ── */}
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              position: "relative",
+              zIndex: 1,
+              marginTop: 22,
+              fontFamily: "'Space Grotesk', 'Inter', system-ui, sans-serif",
+              fontSize: "clamp(12px, 1.6vw, 14px)",
+              fontWeight: 600,
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              color: "rgba(148,163,184,0.55)",
+            }}
+          >
+            YourUniverse
+          </motion.p>
+
+          {/* ── Hairline progress trace ── */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 0.6 }}
             style={{
-              position: "absolute",
-              bottom: 60,
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "min(320px, 80vw)",
+              position: "relative",
               zIndex: 1,
-            }}
-          >
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginBottom: 10,
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: 10,
-              fontWeight: 600,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-            }}>
-              <span style={{ color: "rgba(255,255,255,0.25)" }}>Initialising</span>
-              <span style={{ color: "rgba(61,127,255,0.7)" }}>{progress}%</span>
-            </div>
-            <div style={{
-              width: "100%",
+              marginTop: 32,
+              width: "clamp(80px, 12vw, 120px)",
               height: 1,
               background: "rgba(255,255,255,0.06)",
               borderRadius: 99,
               overflow: "hidden",
-            }}>
-              <motion.div
-                animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.15, ease: "easeOut" }}
-                style={{
-                  height: "100%",
-                  background: "linear-gradient(90deg, #3D7FFF, #A78BFA)",
-                  borderRadius: 99,
-                  boxShadow: "0 0 12px rgba(61,127,255,0.6)",
-                }}
-              />
-            </div>
+            }}
+          >
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 2.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                height: "100%",
+                width: "100%",
+                transformOrigin: "left",
+                borderRadius: 99,
+                background: "linear-gradient(90deg, rgba(241,245,249,0.4) 0%, rgba(119,77,255,0.8) 60%, rgba(254,74,35,0.6) 100%)",
+              }}
+            />
           </motion.div>
-
-          {/* Reveal flash */}
-          <AnimatePresence>
-            {phase === "reveal" && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 0.15, 0] }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: "radial-gradient(circle at 50% 50%, rgba(61,127,255,0.4), transparent 60%)",
-                  pointerEvents: "none",
-                }}
-              />
-            )}
-          </AnimatePresence>
         </motion.div>
       )}
     </AnimatePresence>

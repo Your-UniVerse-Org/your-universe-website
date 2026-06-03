@@ -77,13 +77,12 @@ export default function Waitlist() {
 
   if (submitted) {
     return (
-      <section id="waitlist" style={{ background: "var(--bg)", position: "relative" }}>
-        <div className="section">
+      <section id="waitlist" className="section" style={{ background: "var(--surface)", borderTop: "1px solid var(--border)", position: "relative" }}>
           <div className="container" style={{ display: "flex", justifyContent: "center" }}>
             <motion.div initial={{ opacity: 0, scale: 0.92, y: 24 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE }}
               style={{ maxWidth: 520, width: "100%", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 20, padding: "64px 48px", textAlign: "center" }}>
               <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 280, damping: 18, delay: 0.2 }}
-                style={{ width: 64, height: 64, borderRadius: "50%", background: "var(--blue-dim)", border: "1px solid var(--border-blue)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 28px", color: "var(--blue)" }}>
+                style={{ width: 64, height: 64, borderRadius: "50%", background: "var(--purple-dim)", border: "1px solid var(--purple-border)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 28px", color: "var(--purple)" }}>
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
               </motion.div>
               <motion.h2 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.5, ease: EASE }} className="display-3" style={{ marginBottom: 16 }}>{t("wait_success_h")}</motion.h2>
@@ -93,7 +92,6 @@ export default function Waitlist() {
               </motion.p>
             </motion.div>
           </div>
-        </div>
       </section>
     );
   }
@@ -105,16 +103,20 @@ export default function Waitlist() {
   };
 
   return (
-    <section id="waitlist" style={{ background: "var(--bg)", position: "relative" }}>
-      <div className="section">
-        <div className="container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <section
+      id="waitlist"
+      className="section"
+      aria-labelledby="waitlist-heading"
+      style={{ background: "var(--surface)", borderTop: "1px solid var(--border)", position: "relative" }}
+    >
+      <div className="container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
 
           {/* ─── Section heading ─────────────────────────────── */}
           <div style={{ textAlign: "center", marginBottom: 56, maxWidth: 600 }}>
-            <p className="label" style={{ marginBottom: 16 }}>{t("waitlist_label")}</p>
-            <h2 className="display-3" style={{ marginBottom: 16 }}>
+            <p className="label" style={{ marginBottom: 20 }}>{t("waitlist_label")}</p>
+            <h2 id="waitlist-heading" className="display-2" style={{ marginBottom: 20 }}>
               {t("waitlist_h2_1")}{" "}
-              <span className="text-gradient text-italic">{t("waitlist_h2_2")}</span>
+              <span className="text-gradient">{t("waitlist_h2_2")}</span>
             </h2>
             <p className="body-lg" style={{ maxWidth: 480, margin: "0 auto" }}>
               {t("waitlist_sub")}
@@ -129,11 +131,11 @@ export default function Waitlist() {
                 <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-3)" }}>
                   {currentStep === 5 ? t("wait_review_lbl") : `${t("wait_step")} ${stepIndex + 1} ${t("wait_of")} ${steps.length}`}
                 </span>
-                <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 11, fontWeight: 700, color: "var(--blue)", letterSpacing: "0.04em" }}>{progress}%</span>
+                <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 11, fontWeight: 700, color: "var(--purple)", letterSpacing: "0.04em" }}>{progress}%</span>
               </div>
               <div style={{ height: 3, background: "var(--border)", borderRadius: 99, overflow: "hidden" }}>
                 <motion.div animate={{ width: `${progress}%` }} transition={{ duration: 0.5, ease: EASE }}
-                  style={{ height: "100%", background: "linear-gradient(90deg, rgba(61,127,255,0.7), rgba(61,127,255,1))", borderRadius: 99 }} />
+                  style={{ height: "100%", background: "linear-gradient(90deg, rgba(119,77,255,0.7), rgba(119,77,255,1))", borderRadius: 99 }} />
               </div>
             </div>
 
@@ -142,6 +144,7 @@ export default function Waitlist() {
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.div key={currentStep} custom={direction} variants={variants} initial="enter" animate="center" exit="exit"
                   transition={{ duration: 0.42, ease: EASE }}
+                  className="waitlist-card-inner"
                   style={{ padding: "48px 40px", flex: 1, display: "flex", flexDirection: "column" }}>
                   {currentStep === 0 && <StepType value={data.type} onChange={(v) => setData((d) => ({ ...d, type: v }))} onAdvance={advance} t={tFn} />}
                   {currentStep === 1 && <StepText question={t("wait_firstname_q")} hint={t("wait_firstname_hint")} value={data.firstName} onChange={(v) => setData((d) => ({ ...d, firstName: v }))} placeholder={t("wait_firstname_ph")} onKeyDown={onKeyDown} enterLabel={t("wait_press_enter")} autoFocus />}
@@ -182,7 +185,6 @@ export default function Waitlist() {
               </motion.div>
             )}
           </div>
-        </div>
       </div>
     </section>
   );
@@ -191,7 +193,7 @@ export default function Waitlist() {
 function StepType({ value, onChange, onAdvance, t }: { value: UserType; onChange: (v: UserType) => void; onAdvance: () => void; t: (k: string) => string }) {
   return (
     <div>
-      <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--blue)", marginBottom: 16 }}>{t("wait_type_label")}</p>
+      <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--purple)", marginBottom: 16 }}>{t("wait_type_label")}</p>
       <h2 style={{ fontFamily: "'Instrument Serif',Georgia,serif", fontSize: "clamp(24px,3vw,32px)", fontWeight: 400, color: "var(--text-1)", lineHeight: 1.2, marginBottom: 32 }}>{t("wait_type_heading")}</h2>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         {TYPE_OPTIONS.map((opt) => {
@@ -199,11 +201,11 @@ function StepType({ value, onChange, onAdvance, t }: { value: UserType; onChange
           return (
             <motion.button key={opt.value} type="button" whileHover={{ scale: 1.02, borderColor: "var(--border-blue)" }} whileTap={{ scale: 0.98 }}
               onClick={() => { onChange(opt.value); setTimeout(onAdvance, 180); }}
-              style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 10, padding: "18px 16px", background: selected ? "var(--blue-dim)" : "var(--surface-2)", border: `1px solid ${selected ? "var(--border-blue)" : "var(--border)"}`, borderRadius: 12, cursor: "pointer", transition: "background 0.15s, border-color 0.15s", color: selected ? "var(--blue)" : "var(--text-2)", textAlign: "left" }}>
-              <span style={{ color: selected ? "var(--blue)" : "var(--text-3)", display: "flex" }}>{opt.icon}</span>
+              style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 10, padding: "18px 16px", background: selected ? "var(--purple-dim)" : "var(--surface-2)", border: `1px solid ${selected ? "var(--purple-border)" : "var(--border)"}`, borderRadius: 12, cursor: "pointer", transition: "background 0.15s, border-color 0.15s", color: selected ? "var(--purple)" : "var(--text-2)", textAlign: "left" }}>
+              <span style={{ color: selected ? "var(--purple)" : "var(--text-3)", display: "flex" }}>{opt.icon}</span>
               <div>
                 <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 14, fontWeight: 700, color: "inherit", marginBottom: 3 }}>{opt.label}</p>
-                <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 12, fontWeight: 400, color: selected ? "var(--blue)" : "var(--text-3)" }}>{opt.sub}</p>
+                <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 12, fontWeight: 400, color: selected ? "var(--purple)" : "var(--text-3)" }}>{opt.sub}</p>
               </div>
             </motion.button>
           );

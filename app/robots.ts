@@ -1,8 +1,17 @@
 import type { MetadataRoute } from "next";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://youruniverse.co.za";
+
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: { userAgent: "*", allow: "/", disallow: "/api/" },
-    sitemap: "https://your-universe-five.vercel.app/sitemap.xml",
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/api/", "/_next/"],
+      },
+    ],
+    sitemap: `${BASE_URL}/sitemap.xml`,
+    host: BASE_URL,
   };
 }

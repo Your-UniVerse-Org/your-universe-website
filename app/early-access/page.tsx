@@ -7,7 +7,7 @@ import { LaunchHeroGraphic } from "@/components/SectionGraphics";
 export const metadata: Metadata = {
   title: "Request Early Access",
   description:
-    "Join the waitlist for Your Uni-Verse — South Africa's first AI-powered educational decision intelligence platform. Free for every student, always.",
+    "Join the waitlist for YourUniverse — South Africa's first AI-powered educational decision intelligence platform. Free for every student, always.",
 };
 
 export default function EarlyAccessPage() {
@@ -34,7 +34,7 @@ export default function EarlyAccessPage() {
               width: 700,
               height: 380,
               background:
-                "radial-gradient(ellipse at 50% 0%, rgba(61,127,255,0.15) 0%, transparent 70%)",
+                "radial-gradient(ellipse at 50% 0%, rgba(119,77,255,0.15) 0%, transparent 70%)",
               pointerEvents: "none",
             }}
           />
@@ -49,7 +49,7 @@ export default function EarlyAccessPage() {
               </div>
               <h1 className="display-2" style={{ marginBottom: 24 }}>
                 Be first in line when{" "}
-                <span className="text-gradient text-italic">we launch</span>
+                <span className="text-gradient">we launch</span>
               </h1>
               <p className="body-lg" style={{ maxWidth: 500 }}>
                 We&apos;re onboarding schools, learners, and institutional

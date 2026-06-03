@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 
 export const metadata: Metadata = { title: "Terms of Service" };
 
 export default function Page() {
   return (
-    <div style={{ background: "var(--bg)", minHeight: "100vh", paddingTop: 100, paddingBottom: 120 }}>
+    <div style={{ background: "var(--bg)", minHeight: "100vh" }}>
+      <Navbar />
+      <div style={{ paddingTop: 120, paddingBottom: 120 }}>
       <div className="container" style={{ maxWidth: 760 }}>
         <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 14, color: "var(--text-3)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 500, marginBottom: 48, transition: "color 0.2s" }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m19 12H5"/><path d="m12 5-7 7 7 7"/></svg>
@@ -41,6 +45,8 @@ export default function Page() {
           </section>
         </div>
       </div>
+      </div>
+      <Footer />
     </div>
   );
 }

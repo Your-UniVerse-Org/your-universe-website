@@ -1,73 +1,185 @@
 "use client";
+
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { AINeuralGraphic } from "./SectionGraphics";
+import Image from "next/image";
 import { useLang } from "./LanguageContext";
 
-const an = (d: number, inView: boolean) => ({
-  initial: { opacity: 0, y: 28 },
-  animate: inView ? { opacity: 1, y: 0 } : {},
-  transition: { duration: 0.7, delay: d, ease: "easeOut" as const },
-});
-
-const ICONS = [
-  <svg key="0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>,
-  <svg key="1" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>,
-  <svg key="2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>,
-  <svg key="3" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>,
-  <svg key="4" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>,
-  <svg key="5" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>,
-];
-const GOLD = [false, false, false, true, true, true];
-const TAGS = ["AI · ML · NLP", "Psychometrics · Neuroscience", "Forecasting · Risk · Intelligence", "Engagement · Retention · Progress", "Portfolio · Identity · Credentials", "Applications · Placement · TVET"];
+const PLATFORM_CARDS = [
+  {
+    key: "p1",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="m4.93 4.93 14.14 14.14"/><path d="m12 2-3 10 3 2 3-2-3-10z"/>
+      </svg>
+    ),
+    accent: "purple",
+  },
+  {
+    key: "p2",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+    ),
+    accent: "purple",
+  },
+  {
+    key: "p3",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+      </svg>
+    ),
+    accent: "purple",
+  },
+  {
+    key: "p4",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+    ),
+    accent: "orange",
+  },
+  {
+    key: "p5",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+      </svg>
+    ),
+    accent: "orange",
+  },
+  {
+    key: "p6",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+      </svg>
+    ),
+    accent: "orange",
+  },
+] as const;
 
 export default function Platform() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
   const { t } = useLang();
-
-  const PILLARS = [
-    { title: t("plat_p1_title"), body: t("plat_p1_body"), icon: ICONS[0], gold: GOLD[0], tag: TAGS[0] },
-    { title: t("plat_p2_title"), body: t("plat_p2_body"), icon: ICONS[1], gold: GOLD[1], tag: TAGS[1] },
-    { title: t("plat_p3_title"), body: t("plat_p3_body"), icon: ICONS[2], gold: GOLD[2], tag: TAGS[2] },
-    { title: t("plat_p4_title"), body: t("plat_p4_body"), icon: ICONS[3], gold: GOLD[3], tag: TAGS[3] },
-    { title: t("plat_p5_title"), body: t("plat_p5_body"), icon: ICONS[4], gold: GOLD[4], tag: TAGS[4] },
-    { title: t("plat_p6_title"), body: t("plat_p6_body"), icon: ICONS[5], gold: GOLD[5], tag: TAGS[5] },
-  ];
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-12%" });
 
   return (
-    <section id="platform" style={{ background: "var(--surface)", position: "relative" }}>
-      <div className="glow-section" style={{ top: "50%", transform: "translate(-50%, -50%)" }} />
-      <div className="section">
-        <div className="container" ref={ref}>
-          <div className="sg-row" style={{ marginBottom: 80 }}>
-            <div className="sg-col">
-              <motion.p {...an(0.05, inView)} className="label" style={{ marginBottom: 20 }}>{t("platform_label")}</motion.p>
-              <motion.h2 {...an(0.15, inView)} className="display-2">
-                {t("plat_h2_a")}
-                <br />
-                <span className="text-italic text-gradient">{t("plat_h2_b")}</span>
-              </motion.h2>
-              <motion.p {...an(0.25, inView)} className="body-lg" style={{ marginTop: 20 }}>{t("plat_body")}</motion.p>
+    <section
+      ref={ref}
+      id="platform"
+      className="section"
+      aria-labelledby="platform-heading"
+      style={{ background: "var(--surface)", borderTop: "1px solid var(--border)" }}
+    >
+      <div className="container">
+
+        {/* Header + intro */}
+        <div className="split-2" style={{ marginBottom: 72 }}>
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6 }}
+              className="label" style={{ marginBottom: 20 }}
+            >
+              {t("platform_label")}
+            </motion.p>
+            <motion.h2
+              id="platform-heading"
+              initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.65, delay: 0.1 }}
+              className="display-2"
+            >
+              {t("plat_h2_a")}<br />
+              <span className="text-gradient">{t("plat_h2_b")}</span>
+            </motion.h2>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.65, delay: 0.2 }}
+          >
+            <p className="body-lg" style={{ marginBottom: 28 }}>
+              {t("plat_body")}
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+              <span className="pill"><span className="pill-dot" />6 Intelligence Systems</span>
+              <span className="pill pill-orange">NSC + IEB Ready</span>
+              <span className="pill">Free for Students</span>
             </div>
-            <motion.div {...an(0.1, inView)}><AINeuralGraphic /></motion.div>
-          </div>
-          <div className="platform-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", border: "1px solid var(--border)", borderRadius: "var(--radius-xl)" }}>
-            {PILLARS.map((p, i) => (
-              <motion.div key={i} {...an(0.05 + i * 0.08, inView)}
-                style={{ padding: "36px", background: "var(--surface)", borderBottom: "1px solid var(--border)", borderRight: "1px solid var(--border)", transition: "background 0.2s" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--surface-2)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--surface)"; }}>
-                <div className={`icon-box${p.gold ? " icon-box-gold" : ""}`} style={{ marginBottom: 20 }}>{p.icon}</div>
-                <h3 className="h3" style={{ marginBottom: 10, fontSize: 17 }}>{p.title}</h3>
-                <p className="body" style={{ marginBottom: 16, fontSize: 14, lineHeight: 1.7 }}>{p.body}</p>
-                <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", color: "var(--text-3)", textTransform: "uppercase" }}>{p.tag}</p>
-              </motion.div>
-            ))}
-          </div>
+          </motion.div>
+        </div>
+
+        {/* ── Human photo strip ── */}
+        {/* Photos: Unsplash (free commercial use under Unsplash License) */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 16,
+            marginBottom: 64,
+            borderRadius: 20,
+            overflow: "hidden",
+          }}
+        >
+          {[
+            /* photo-1509062522246-3755977927d7 – student with notes at desk */
+            { src: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&h=340&fit=crop&q=80", alt: "Student reviewing career and subject options" },
+            /* pexels/6238043 — Monstera Production education series */
+            { src: "https://images.pexels.com/photos/6238043/pexels-photo-6238043.jpeg?auto=compress&cs=tinysrgb&w=600&h=340&fit=crop", alt: "Student building their academic profile" },
+            /* photo-1517486808906-6ca8b3f04846 – students at laptops together */
+            { src: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&h=340&fit=crop&q=80", alt: "Students discovering career pathways with YourUniverse" },
+          ].map((img, i) => (
+            <div key={i} style={{ position: "relative", aspectRatio: "16/9", borderRadius: 12, overflow: "hidden", border: "1px solid var(--border)" }}>
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(119,77,255,0.08) 100%)", zIndex: 1, pointerEvents: "none" }} />
+              <Image src={img.src} alt={img.alt} fill sizes="(max-width:768px) 100vw, 33vw" style={{ objectFit: "cover" }} />
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Cards grid */}
+        <div
+          className="features-grid"
+          role="list"
+          aria-label="Platform intelligence systems"
+        >
+          {PLATFORM_CARDS.map((card, i) => {
+            const isOrange = card.accent === "orange";
+            return (
+              <motion.article
+                key={card.key}
+                role="listitem"
+                initial={{ opacity: 0, y: 28 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.65, delay: 0.3 + i * 0.09, ease: [0.22, 1, 0.36, 1] }}
+                className="feature-card"
+                style={{ padding: "32px 28px" }}
+              >
+                <div
+                  className={isOrange ? "icon-box icon-box-orange" : "icon-box"}
+                  style={{ marginBottom: 20 }}
+                  aria-hidden="true"
+                >
+                  {card.icon}
+                </div>
+
+                <h3 className="h3" style={{ marginBottom: 12 }}>
+                  {t(`plat_${card.key}_title` as Parameters<typeof t>[0])}
+                </h3>
+
+                <p className="body">
+                  {t(`plat_${card.key}_body` as Parameters<typeof t>[0])}
+                </p>
+              </motion.article>
+            );
+          })}
         </div>
       </div>
-      <div className="section-divider" />
     </section>
   );
 }

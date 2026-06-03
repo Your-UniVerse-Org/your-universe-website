@@ -1,67 +1,175 @@
 "use client";
+
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { StudyDashboardGraphic } from "./SectionGraphics";
+import Image from "next/image";
 import { useLang } from "./LanguageContext";
 
-const an = (d: number, inView: boolean) => ({
-  initial: { opacity: 0, y: 24 },
-  animate: inView ? { opacity: 1, y: 0 } : {},
-  transition: { duration: 0.65, delay: d, ease: "easeOut" as const },
-});
-
-const ICONS = [
-  <svg key="0" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>,
-  <svg key="1" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>,
-  <svg key="2" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>,
-  <svg key="3" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
-  <svg key="4" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>,
-  <svg key="5" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>,
-];
-const TAGS = ["Curriculum-aligned · Adaptive · Daily", "NSC · IEB · Trend analysis", "University benchmarks · Faculty-specific", "Mastery scores · Streaks · Weekly reports", "Timed sessions · Adaptive sets · Deep focus", "Matric · Undergrad · Postgrad"];
+const FEATURES = [
+  {
+    key:  "f1",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+      </svg>
+    ),
+  },
+  {
+    key:  "f2",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+      </svg>
+    ),
+  },
+  {
+    key:  "f3",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+      </svg>
+    ),
+  },
+  {
+    key:  "f4",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+      </svg>
+    ),
+  },
+  {
+    key:  "f5",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+    ),
+  },
+  {
+    key:  "f6",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+    ),
+  },
+] as const;
 
 export default function Features() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
   const { t } = useLang();
-
-  const FEATURES = [
-    { title: t("feat_f1_title"), body: t("feat_f1_body"), icon: ICONS[0], tag: TAGS[0] },
-    { title: t("feat_f2_title"), body: t("feat_f2_body"), icon: ICONS[1], tag: TAGS[1] },
-    { title: t("feat_f3_title"), body: t("feat_f3_body"), icon: ICONS[2], tag: TAGS[2] },
-    { title: t("feat_f4_title"), body: t("feat_f4_body"), icon: ICONS[3], tag: TAGS[3] },
-    { title: t("feat_f5_title"), body: t("feat_f5_body"), icon: ICONS[4], tag: TAGS[4] },
-    { title: t("feat_f6_title"), body: t("feat_f6_body"), icon: ICONS[5], tag: TAGS[5] },
-  ];
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-12%" });
 
   return (
-    <section id="features" style={{ background: "var(--surface)", position: "relative" }}>
-      <div className="section">
-        <div className="container" ref={ref}>
-          <div className="sg-row" style={{ marginBottom: 64 }}>
-            <div className="sg-col">
-              <motion.p {...an(0.05, inView)} className="label" style={{ marginBottom: 16 }}>{t("features_label")}</motion.p>
-              <motion.h2 {...an(0.15, inView)} className="display-2">{t("features_h2")}</motion.h2>
-              <motion.p {...an(0.25, inView)} className="body-lg" style={{ marginTop: 20 }}>{t("features_sub")}</motion.p>
+    <section
+      ref={ref}
+      id="features"
+      className="section"
+      aria-labelledby="features-heading"
+      style={{ background: "var(--bg)", borderTop: "1px solid var(--border)" }}
+    >
+      <div className="container">
+
+        {/* Header */}
+        <div style={{ textAlign: "center", maxWidth: 600, margin: "0 auto 72px" }}>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="label" style={{ marginBottom: 20 }}
+          >
+            {t("features_label")}
+          </motion.p>
+          <motion.h2
+            id="features-heading"
+            initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.65, delay: 0.1 }}
+            className="display-2" style={{ marginBottom: 20 }}
+          >
+            {t("features_h2")}
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="body-lg"
+          >
+            {t("features_sub")}
+          </motion.p>
+        </div>
+
+        {/* ── Human photo banner — taller for visual impact ── */}
+        {/* Photo: Pexels — Monstera Production, Pexels License (free commercial use) */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.25 }}
+          style={{
+            position: "relative",
+            borderRadius: 24,
+            overflow: "hidden",
+            minHeight: "clamp(260px, 38vw, 480px)",
+            marginBottom: 72,
+            border: "1px solid var(--border)",
+            boxShadow: "0 24px 60px rgba(0,0,0,0.32)",
+          }}
+        >
+          {/* Dark vignette — heavier on left for text legibility */}
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(105deg, rgba(15,23,42,0.88) 0%, rgba(15,23,42,0.50) 45%, rgba(15,23,42,0.20) 100%)", zIndex: 1, pointerEvents: "none" }} />
+          {/* Purple brand tint */}
+          <div style={{ position: "absolute", inset: 0, background: "rgba(119,77,255,0.07)", zIndex: 1, pointerEvents: "none" }} />
+          <Image
+            src="https://images.pexels.com/photos/6238089/pexels-photo-6238089.jpeg?auto=compress&cs=tinysrgb&w=1600&h=700&fit=crop&crop=center"
+            alt="Students and educators using the YourUniverse platform"
+            fill sizes="(max-width:768px) 100vw, 100vw"
+            style={{ objectFit: "cover", objectPosition: "center 35%" }}
+          />
+          {/* Overlay text content */}
+          <div style={{ position: "absolute", inset: 0, zIndex: 2, display: "flex", flexDirection: "column", justifyContent: "center", padding: "clamp(32px,6vw,88px)" }}>
+            <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(167,139,255,0.95)", marginBottom: 14 }}>
+              Built exclusively for South Africa
+            </p>
+            <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(26px,4.5vw,48px)", color: "rgba(241,245,249,0.97)", lineHeight: 1.2, maxWidth: 560, marginBottom: 24 }}>
+              Every feature designed around the learner, not the institution.
+            </p>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              {["NSC + IEB Ready", "Free for Students", "AI-Powered", "Grade 9–12"].map(tag => (
+                <span key={tag} style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 12, fontWeight: 600, color: "rgba(241,245,249,0.80)", background: "rgba(119,77,255,0.22)", border: "1px solid rgba(119,77,255,0.35)", borderRadius: 99, padding: "5px 14px", backdropFilter: "blur(8px)" }}>
+                  {tag}
+                </span>
+              ))}
             </div>
-            <motion.div {...an(0.1, inView)}><StudyDashboardGraphic /></motion.div>
           </div>
-          <div className="features-grid">
-            {FEATURES.map((f, i) => (
-              <motion.div key={i} {...an(0.1 + i * 0.07, inView)}
-                style={{ padding: "32px", background: "var(--surface)", transition: "background 0.2s" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--surface-2)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--surface)"; }}>
-                <div className="icon-box" style={{ marginBottom: 20, color: "var(--violet-text)" }}>{f.icon}</div>
-                <h3 className="h3" style={{ marginBottom: 10, fontSize: 18 }}>{f.title}</h3>
-                <p className="body" style={{ marginBottom: 16, fontSize: 14 }}>{f.body}</p>
-                <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.07em", color: "var(--text-3)", textTransform: "uppercase" }}>{f.tag}</p>
-              </motion.div>
-            ))}
-          </div>
+        </motion.div>
+
+        {/* Grid */}
+        <div
+          className="features-grid"
+          role="list"
+          aria-label="Platform features"
+        >
+          {FEATURES.map((feat, i) => (
+            <motion.article
+              key={feat.key}
+              role="listitem"
+              initial={{ opacity: 0, y: 28 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.65, delay: 0.3 + i * 0.09, ease: [0.22, 1, 0.36, 1] }}
+              className="feature-card"
+              style={{ padding: "32px 28px" }}
+            >
+              <div className="icon-box" style={{ marginBottom: 20 }} aria-hidden="true">
+                {feat.icon}
+              </div>
+              <h3 className="h3" style={{ marginBottom: 12 }}>
+                {t(`feat_${feat.key}_title` as Parameters<typeof t>[0])}
+              </h3>
+              <p className="body">
+                {t(`feat_${feat.key}_body` as Parameters<typeof t>[0])}
+              </p>
+            </motion.article>
+          ))}
         </div>
       </div>
-      <div className="section-divider" />
     </section>
   );
 }
