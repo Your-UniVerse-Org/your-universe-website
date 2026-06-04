@@ -79,7 +79,7 @@ export default function SchoolsHero() {
           >
             <div style={{
               position: "absolute", inset: 0, zIndex: 1,
-              background: "linear-gradient(180deg, transparent 55%, rgba(15,23,42,0.80) 100%)",
+              background: "var(--media-overlay-bottom)",
               pointerEvents: "none",
             }}/>
             {/*

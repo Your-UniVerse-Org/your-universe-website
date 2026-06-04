@@ -170,7 +170,7 @@ export default function HeroVisual() {
         {/* Gradient overlay */}
         <div aria-hidden="true" style={{
           position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
-          background: "linear-gradient(180deg, rgba(15,23,42,0.25) 0%, transparent 30%, transparent 55%, rgba(15,23,42,0.72) 100%)",
+          background: "var(--media-overlay-hero)",
         }}/>
         {/* Brand tint */}
         <div aria-hidden="true" style={{
@@ -219,7 +219,7 @@ export default function HeroVisual() {
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <div style={{
             width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
-            background: "conic-gradient(#774DFF 0% 87%, rgba(255,255,255,0.06) 87% 100%)",
+            background: "conic-gradient(#774DFF 0% 87%, var(--surface-3) 87% 100%)",
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
             <div style={{

@@ -99,13 +99,9 @@ export default function Ecosystem() {
           </motion.p>
         </div>
 
-        {/* Stakeholder cards */}
+        {/* Stakeholder cards: 2×2 desktop, 4-across on wide, stacked on mobile */}
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(min(280px, 100%), 1fr))",
-            gap: 20,
-          }}
+          className="ecosystem-grid"
           role="list"
           aria-label="Stakeholder groups"
         >
@@ -116,6 +112,7 @@ export default function Ecosystem() {
               initial={{ opacity: 0, y: 32 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.3 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="ecosystem-card"
               style={{
                 background: "var(--surface)",
                 border: "1px solid var(--border)",
@@ -124,6 +121,7 @@ export default function Ecosystem() {
                 display: "flex",
                 flexDirection: "column",
                 gap: 0,
+                height: "100%",
                 transition: "border-color 0.3s",
               }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.borderColor = `${s.color}40`; }}

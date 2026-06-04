@@ -114,7 +114,7 @@ export default function Features() {
           }}
         >
           {/* Dark vignette — heavier on left for text legibility */}
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(105deg, rgba(15,23,42,0.88) 0%, rgba(15,23,42,0.50) 45%, rgba(15,23,42,0.20) 100%)", zIndex: 1, pointerEvents: "none" }} />
+          <div className="media-overlay-side" style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none" }} />
           {/* Purple brand tint */}
           <div style={{ position: "absolute", inset: 0, background: "rgba(119,77,255,0.07)", zIndex: 1, pointerEvents: "none" }} />
           <Image

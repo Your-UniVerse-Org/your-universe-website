@@ -22,6 +22,7 @@ interface WaitlistEntry {
   email: string;
   org: string;
   type: string;
+  profile?: Record<string, string>;
   timestamp: string;
   ip: string;
 }
@@ -65,7 +66,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { name, email, org, type } = body as Partial<WaitlistEntry>;
+    const { name, email, org, type, profile } = body as Partial<WaitlistEntry>;
 
     if (!name?.trim() || !email?.trim() || !type?.trim()) {
       return NextResponse.json({ error: "Name, email, and type are required." }, { status: 400 });
@@ -81,6 +82,7 @@ export async function POST(req: NextRequest) {
       email: email.trim().toLowerCase(),
       org: org?.trim() ?? "",
       type: type.trim(),
+      profile: profile && typeof profile === "object" ? profile : undefined,
       timestamp: new Date().toISOString(),
       ip,
     };
@@ -99,6 +101,7 @@ export async function POST(req: NextRequest) {
           <tr><td style="padding:10px 0;color:#94A3B8">Name</td><td style="color:#F1F5F9">${entry.name}</td></tr>
           <tr><td style="padding:10px 0;color:#94A3B8">Email</td><td style="color:#774DFF">${entry.email}</td></tr>
           <tr><td style="padding:10px 0;color:#94A3B8">Organisation</td><td style="color:#F1F5F9">${entry.org || "N/A"}</td></tr>
+          ${entry.profile && Object.keys(entry.profile).length ? `<tr><td style="padding:10px 0;color:#94A3B8;vertical-align:top">Profile</td><td style="color:#F1F5F9">${Object.entries(entry.profile).map(([k,v]) => `<div style="margin-bottom:6px"><strong style="color:#94A3B8;font-size:12px">${k}</strong><br/>${v}</div>`).join("")}</td></tr>` : ""}
           <tr><td style="padding:10px 0;color:#94A3B8">Submitted</td><td style="color:#F1F5F9">${new Date(entry.timestamp).toLocaleString("en-ZA")}</td></tr>
         </table>
       </div>`

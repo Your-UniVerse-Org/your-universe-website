@@ -98,11 +98,7 @@ export default function Problem() {
               border: "1px solid rgba(254,74,35,0.18)",
             }}
           >
-            <div style={{
-              position: "absolute", inset: 0, zIndex: 1,
-              background: "linear-gradient(180deg, transparent 50%, rgba(15,23,42,0.75) 100%)",
-              pointerEvents: "none",
-            }}/>
+            <div className="media-overlay-bottom" style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none" }} />
             {/*
               Photo: Pexels — "Student writing on blackboard"
               Source: https://www.pexels.com/photo/6238037/

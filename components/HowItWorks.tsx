@@ -135,7 +135,7 @@ function StepRow({ step, index, inView }: { step: typeof STEPS[0]; index: number
       }}>
         <div style={{
           position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
-          background: "linear-gradient(135deg, rgba(15,23,42,0.3) 0%, transparent 60%)",
+          background: "var(--media-overlay-hero)",
         }}/>
         <Image src={step.photo} alt={step.photoAlt} fill sizes="50vw"
           style={{ objectFit: "cover" }}/>
@@ -204,7 +204,7 @@ function MobileStepCard({ step, progress }: { step: typeof STEPS[0]; progress: n
           <div key={s.n} style={{
             width: s.n === step.n ? 20 : 6,
             height: 6, borderRadius: 99,
-            background: s.n === step.n ? step.accent : "rgba(255,255,255,0.15)",
+            background: s.n === step.n ? step.accent : "var(--timeline-inactive)",
             transition: "all 0.3s ease",
           }}/>
         ))}

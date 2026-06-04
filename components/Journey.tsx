@@ -121,7 +121,7 @@ function MobilePhaseCard({ phase, index }: { phase: typeof PHASES[number]; index
         }}>
           <div style={{
             position: "absolute", inset: 0, zIndex: 1,
-            background: "linear-gradient(180deg, transparent 60%, rgba(15,23,42,0.6) 100%)",
+            background: "var(--media-overlay-bottom)",
             pointerEvents: "none",
           }}/>
           <Image
@@ -156,7 +156,7 @@ function MobilePhaseCard({ phase, index }: { phase: typeof PHASES[number]; index
               style={{
                 width: j === index ? 22 : 6,
                 height: 6, borderRadius: 99,
-                background: j === index ? phase.color : "rgba(255,255,255,0.12)",
+                background: j === index ? phase.color : "var(--timeline-inactive)",
                 transition: "all 0.3s",
               }}
             />
@@ -353,7 +353,7 @@ export default function Journey() {
                           key={j}
                           style={{
                             flex: 1, height: 3, borderRadius: 99,
-                            background: j <= i ? phase.color : "rgba(255,255,255,0.07)",
+                            background: j <= i ? phase.color : "var(--timeline-inactive)",
                             transition: "background 0.3s",
                           }}
                         />

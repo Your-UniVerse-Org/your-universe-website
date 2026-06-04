@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useLang } from "./LanguageContext";
+import { useTheme } from "./ThemeContext";
 import Logo from "./shared/ui/Logo";
 
 export default function Footer() {
   const { t } = useLang();
+  const { theme } = useTheme();
 
   const COL: Record<string, { label: string; href: string }[]> = {
     [t("foot_col_platform")]: [
@@ -37,7 +39,7 @@ export default function Footer() {
           {/* Brand column */}
           <div style={{ maxWidth: 300 }}>
             <Link href="/" style={{ display: "inline-block", marginBottom: 20 }}>
-              <Logo height={28} white />
+              <Logo height={28} white={theme === "dark"} />
             </Link>
             <p className="body" style={{ fontSize: 14, marginBottom: 24, lineHeight: 1.75 }}>
               {t("foot_tagline")}

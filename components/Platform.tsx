@@ -136,7 +136,7 @@ export default function Platform() {
             { src: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&h=340&fit=crop&q=80", alt: "Students discovering career pathways with YourUniverse" },
           ].map((img, i) => (
             <div key={i} style={{ position: "relative", aspectRatio: "16/9", borderRadius: 12, overflow: "hidden", border: "1px solid var(--border)" }}>
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(119,77,255,0.08) 100%)", zIndex: 1, pointerEvents: "none" }} />
+              <div className="media-overlay-hero" style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none" }} />
               <Image src={img.src} alt={img.alt} fill sizes="(max-width:768px) 100vw, 33vw" style={{ objectFit: "cover" }} />
             </div>
           ))}

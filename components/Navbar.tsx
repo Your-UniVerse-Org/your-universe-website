@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLang } from "./LanguageContext";
+import { useTheme } from "./ThemeContext";
 import Logo from "./shared/ui/Logo";
 
 function Chevron({ open, className }: { open: boolean; className?: string }) {
@@ -38,6 +39,8 @@ export default function Navbar() {
   const [instOpen, setInstOpen] = useState(false);
   const [mobileInstOpen, setMobileInstOpen] = useState(false);
   const { lang, setLang, t } = useLang();
+  const { theme, toggleTheme } = useTheme();
+  const logoWhite = theme === "dark";
   const instRef = useRef<HTMLDivElement>(null);
   const instLeaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -161,7 +164,7 @@ export default function Navbar() {
           <div className="nav-inner">
 
             <Link href="/" aria-label="YourUniverse Home" onClick={closeAll}>
-              <Logo height={28} white />
+              <Logo height={28} white={logoWhite} />
             </Link>
 
             {/* Desktop nav */}
@@ -227,34 +230,30 @@ export default function Navbar() {
 
             <div className="nav-actions">
               <button
+                type="button"
+                className="nav-chip-btn"
+                onClick={toggleTheme}
+                title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+                aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+              >
+                {theme === "light" ? (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                  </svg>
+                ) : (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <circle cx="12" cy="12" r="5" />
+                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                  </svg>
+                )}
+              </button>
+
+              <button
+                type="button"
+                className="nav-chip-btn"
                 onClick={() => setLang(lang === "en" ? "af" : "en")}
                 title={lang === "en" ? "Switch to Afrikaans" : "Skakel na Engels"}
                 aria-label={lang === "en" ? "Switch to Afrikaans" : "Switch to English"}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 4,
-                  padding: "5px 10px",
-                  borderRadius: 100,
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid var(--border)",
-                  cursor: "pointer",
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  letterSpacing: "0.08em",
-                  color: "var(--text-2)",
-                  transition: "all 0.2s",
-                  flexShrink: 0,
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border-purple)";
-                  (e.currentTarget as HTMLButtonElement).style.color = "var(--text-1)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border)";
-                  (e.currentTarget as HTMLButtonElement).style.color = "var(--text-2)";
-                }}
               >
                 <span style={{ color: lang === "en" ? "var(--purple)" : "var(--text-3)" }}>EN</span>
                 <span style={{ color: "var(--text-3)", margin: "0 1px" }}>|</span>
@@ -383,20 +382,21 @@ export default function Navbar() {
                   }}
                 >
                   <button
+                    type="button"
+                    className="nav-chip-btn"
+                    onClick={toggleTheme}
+                    aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+                    style={{ padding: "10px 14px" }}
+                  >
+                    {theme === "light" ? "Dark" : "Light"}
+                  </button>
+
+                  <button
+                    type="button"
+                    className="nav-chip-btn"
                     onClick={() => setLang(lang === "en" ? "af" : "en")}
                     aria-label={lang === "en" ? "Switch to Afrikaans" : "Switch to English"}
-                    style={{
-                      padding: "10px 16px",
-                      borderRadius: 100,
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid var(--border)",
-                      cursor: "pointer",
-                      fontFamily: "'Space Grotesk', sans-serif",
-                      fontSize: 12,
-                      fontWeight: 700,
-                      letterSpacing: "0.08em",
-                      color: "var(--text-2)",
-                    }}
+                    style={{ padding: "10px 16px", fontSize: 12 }}
                   >
                     <span style={{ color: lang === "en" ? "var(--purple)" : "var(--text-3)" }}>EN</span>
                     <span style={{ color: "var(--text-3)", margin: "0 3px" }}>|</span>

@@ -5,7 +5,46 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLang } from "./LanguageContext";
 
 type UserType = "School" | "Parent" | "Institution" | "Student" | "";
-interface FormData { type: UserType; firstName: string; surname: string; email: string; org: string; }
+
+interface FormData {
+  type: UserType;
+  firstName: string;
+  surname: string;
+  email: string;
+  org: string;
+  gradeLevel: string;
+  interests: string;
+  academicGoal: string;
+  currentAverage: string;
+  lastTestResult: string;
+  childGrade: string;
+  parentFocus: string;
+  parentGoal: string;
+  schoolRole: string;
+  learnerCount: string;
+  instFocus: string;
+  instGoal: string;
+}
+
+const EMPTY_FORM: FormData = {
+  type: "",
+  firstName: "",
+  surname: "",
+  email: "",
+  org: "",
+  gradeLevel: "",
+  interests: "",
+  academicGoal: "",
+  currentAverage: "",
+  lastTestResult: "",
+  childGrade: "",
+  parentFocus: "",
+  parentGoal: "",
+  schoolRole: "",
+  learnerCount: "",
+  instFocus: "",
+  instGoal: "",
+};
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -17,10 +56,60 @@ const TYPE_OPTIONS: { label: string; sub: string; value: UserType; icon: React.R
 ];
 
 function buildSteps(type: UserType) {
-  const base = [0, 1, 2, 3];
-  if (type && type !== "Student") base.push(4);
-  base.push(5);
-  return base;
+  const steps = [0, 1, 2, 3];
+  if (!type) return steps;
+  steps.push(4);
+  if (type !== "Student") steps.push(5);
+  steps.push(6);
+  return steps;
+}
+
+function buildProfile(data: FormData): Record<string, string> {
+  if (data.type === "Student") {
+    return {
+      gradeLevel: data.gradeLevel.trim(),
+      interests: data.interests.trim(),
+      academicGoal: data.academicGoal.trim(),
+      currentAverage: data.currentAverage.trim(),
+      lastTestResult: data.lastTestResult.trim(),
+    };
+  }
+  if (data.type === "Parent") {
+    return {
+      childGrade: data.childGrade.trim(),
+      parentFocus: data.parentFocus.trim(),
+      parentGoal: data.parentGoal.trim(),
+    };
+  }
+  if (data.type === "School") {
+    return {
+      schoolRole: data.schoolRole.trim(),
+      learnerCount: data.learnerCount.trim(),
+    };
+  }
+  if (data.type === "Institution") {
+    return {
+      instFocus: data.instFocus.trim(),
+      instGoal: data.instGoal.trim(),
+    };
+  }
+  return {};
+}
+
+function profileComplete(data: FormData): boolean {
+  if (data.type === "Student") {
+    return data.interests.trim().length > 0 && data.academicGoal.trim().length > 0;
+  }
+  if (data.type === "Parent") {
+    return data.childGrade.trim().length > 0 && data.parentGoal.trim().length > 0;
+  }
+  if (data.type === "School") {
+    return data.schoolRole.trim().length > 0;
+  }
+  if (data.type === "Institution") {
+    return data.instFocus.trim().length > 0 && data.instGoal.trim().length > 0;
+  }
+  return false;
 }
 
 const SLIDE_IN = { initial: { opacity: 0, y: 40, filter: "blur(4px)" }, animate: { opacity: 1, y: 0, filter: "blur(0px)" }, exit: { opacity: 0, y: -30, filter: "blur(4px)" }, transition: { duration: 0.45, ease: EASE } };
@@ -29,7 +118,7 @@ export default function Waitlist() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { t } = useLang();
   const tFn = t as (k: string) => string;
-  const [data, setData] = useState<FormData>({ type: "", firstName: "", surname: "", email: "", org: "" });
+  const [data, setData] = useState<FormData>(EMPTY_FORM);
   const [stepIndex, setStepIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -38,7 +127,12 @@ export default function Waitlist() {
 
   const steps = buildSteps(data.type);
   const currentStep = steps[stepIndex];
+  const reviewStep = steps[steps.length - 1];
   const progress = Math.round((stepIndex / (steps.length - 1)) * 100);
+
+  useEffect(() => {
+    setStepIndex((i) => Math.min(i, buildSteps(data.type).length - 1));
+  }, [data.type]);
 
   useEffect(() => {
     if (stepIndex === 0) return;
@@ -50,6 +144,11 @@ export default function Waitlist() {
     if (currentStep === 1) return data.firstName.trim().length > 0;
     if (currentStep === 2) return data.surname.trim().length > 0;
     if (currentStep === 3) return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim());
+    if (currentStep === 4) return profileComplete(data);
+    if (currentStep === 5) {
+      if (data.type === "Parent") return true;
+      return data.org.trim().length > 0;
+    }
     return true;
   }, [currentStep, data]);
 
@@ -66,7 +165,17 @@ export default function Waitlist() {
   const handleSubmit = async () => {
     setLoading(true); setError("");
     try {
-      const res = await fetch("/api/waitlist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: `${data.firstName} ${data.surname}`.trim(), email: data.email.trim(), org: data.org.trim(), type: data.type }) });
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: `${data.firstName} ${data.surname}`.trim(),
+          email: data.email.trim(),
+          org: data.org.trim(),
+          type: data.type,
+          profile: buildProfile(data),
+        }),
+      });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Submission failed.");
       setSubmitted(true);
@@ -129,7 +238,7 @@ export default function Waitlist() {
             <div style={{ marginBottom: 36 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
                 <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-3)" }}>
-                  {currentStep === 5 ? t("wait_review_lbl") : `${t("wait_step")} ${stepIndex + 1} ${t("wait_of")} ${steps.length}`}
+                  {currentStep === reviewStep ? t("wait_review_lbl") : `${t("wait_step")} ${stepIndex + 1} ${t("wait_of")} ${steps.length}`}
                 </span>
                 <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 11, fontWeight: 700, color: "var(--purple)", letterSpacing: "0.04em" }}>{progress}%</span>
               </div>
@@ -151,6 +260,9 @@ export default function Waitlist() {
                   {currentStep === 2 && <StepText question={data.firstName ? `Nice to meet you, ${data.firstName}. ${t("wait_surname_q")}` : t("wait_surname_q")} hint="" value={data.surname} onChange={(v) => setData((d) => ({ ...d, surname: v }))} placeholder={t("wait_surname_ph")} onKeyDown={onKeyDown} enterLabel={t("wait_press_enter")} autoFocus />}
                   {currentStep === 3 && <StepEmail name={data.firstName} value={data.email} onChange={(v) => setData((d) => ({ ...d, email: v }))} onKeyDown={onKeyDown} t={tFn} />}
                   {currentStep === 4 && (
+                    <StepProfile data={data} setData={setData} t={tFn} />
+                  )}
+                  {currentStep === 5 && (
                     <StepText
                       question={data.type === "School" ? t("wait_org_school_q") : data.type === "Parent" ? t("wait_org_parent_q") : t("wait_org_inst_q")}
                       hint={t("wait_org_hint")}
@@ -162,13 +274,13 @@ export default function Waitlist() {
                       autoFocus
                     />
                   )}
-                  {currentStep === 5 && <StepReview data={data} loading={loading} error={error} onSubmit={handleSubmit} t={tFn} />}
+                  {currentStep === 6 && <StepReview data={data} loading={loading} error={error} onSubmit={handleSubmit} t={tFn} />}
                 </motion.div>
               </AnimatePresence>
             </div>
 
             {/* Nav row */}
-            {currentStep !== 5 && (
+            {currentStep !== reviewStep && (
               <motion.div {...SLIDE_IN} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 20 }}>
                 <button onClick={back} disabled={stepIndex === 0}
                   style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: "'Space Grotesk',sans-serif", fontSize: 13, fontWeight: 600, color: stepIndex === 0 ? "var(--text-3)" : "var(--text-2)", opacity: stepIndex === 0 ? 0.35 : 1, background: "none", border: "none", cursor: stepIndex === 0 ? "default" : "pointer", transition: "color 0.15s" }}>
@@ -187,6 +299,180 @@ export default function Waitlist() {
           </div>
       </div>
     </section>
+  );
+}
+
+function StepProfile({
+  data,
+  setData,
+  t,
+}: {
+  data: FormData;
+  setData: React.Dispatch<React.SetStateAction<FormData>>;
+  t: (k: string) => string;
+}) {
+  const fieldStyle = { fontSize: 16, padding: "14px 18px" } as const;
+  const labelStyle = {
+    fontFamily: "'Space Grotesk',sans-serif",
+    fontSize: 12,
+    fontWeight: 700,
+    letterSpacing: "0.06em",
+    textTransform: "uppercase" as const,
+    color: "var(--text-3)",
+    marginBottom: 8,
+    display: "block",
+  };
+
+  const heading =
+    data.type === "Student"
+      ? t("wait_stu_heading")
+      : data.type === "Parent"
+        ? t("wait_par_heading")
+        : data.type === "School"
+          ? t("wait_sch_heading")
+          : t("wait_inst_heading");
+
+  const sub =
+    data.type === "Student"
+      ? t("wait_stu_sub")
+      : data.type === "Parent"
+        ? t("wait_par_sub")
+        : data.type === "School"
+          ? t("wait_sch_sub")
+          : t("wait_inst_sub");
+
+  if (data.type === "Student") {
+    const avgOptions = [
+      t("wait_stu_avg_opt1"),
+      t("wait_stu_avg_opt2"),
+      t("wait_stu_avg_opt3"),
+      t("wait_stu_avg_opt4"),
+      t("wait_stu_avg_opt5"),
+    ];
+    const testOptions = [
+      t("wait_stu_test_opt1"),
+      t("wait_stu_test_opt2"),
+      t("wait_stu_test_opt3"),
+      t("wait_stu_test_opt4"),
+    ];
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: 18, flex: 1 }}>
+        <div>
+          <h2 style={{ fontFamily: "'Instrument Serif',Georgia,serif", fontSize: "clamp(22px,3vw,30px)", fontWeight: 400, color: "var(--text-1)", lineHeight: 1.3, marginBottom: 8 }}>{heading}</h2>
+          <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 13, color: "var(--text-3)" }}>{sub}</p>
+        </div>
+        <div>
+          <label style={labelStyle}>{t("wait_stu_grade_q")}</label>
+          <input type="text" className="input" style={fieldStyle} value={data.gradeLevel} placeholder={t("wait_stu_grade_ph")} onChange={(e) => setData((d) => ({ ...d, gradeLevel: e.target.value }))} />
+        </div>
+        <div>
+          <label style={labelStyle}>{t("wait_stu_interests_q")}</label>
+          <input type="text" className="input" style={fieldStyle} value={data.interests} placeholder={t("wait_stu_interests_ph")} onChange={(e) => setData((d) => ({ ...d, interests: e.target.value }))} />
+        </div>
+        <div>
+          <label style={labelStyle}>{t("wait_stu_goal_q")}</label>
+          <input type="text" className="input" style={fieldStyle} value={data.academicGoal} placeholder={t("wait_stu_goal_ph")} onChange={(e) => setData((d) => ({ ...d, academicGoal: e.target.value }))} />
+        </div>
+        <div>
+          <label style={labelStyle}>{t("wait_stu_avg_q")}</label>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {avgOptions.map((opt) => (
+              <Chip key={opt} selected={data.currentAverage === opt} onClick={() => setData((d) => ({ ...d, currentAverage: opt }))}>{opt}</Chip>
+            ))}
+          </div>
+        </div>
+        <div>
+          <label style={labelStyle}>{t("wait_stu_test_q")}</label>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {testOptions.map((opt) => (
+              <Chip key={opt} selected={data.lastTestResult === opt} onClick={() => setData((d) => ({ ...d, lastTestResult: opt }))}>{opt}</Chip>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (data.type === "Parent") {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: 20, flex: 1 }}>
+        <div>
+          <h2 style={{ fontFamily: "'Instrument Serif',Georgia,serif", fontSize: "clamp(22px,3vw,30px)", fontWeight: 400, color: "var(--text-1)", lineHeight: 1.3, marginBottom: 8 }}>{heading}</h2>
+          <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 13, color: "var(--text-3)" }}>{sub}</p>
+        </div>
+        <div>
+          <label style={labelStyle}>{t("wait_par_grade_q")}</label>
+          <input type="text" className="input" style={fieldStyle} value={data.childGrade} placeholder={t("wait_par_grade_ph")} onChange={(e) => setData((d) => ({ ...d, childGrade: e.target.value }))} />
+        </div>
+        <div>
+          <label style={labelStyle}>{t("wait_par_focus_q")}</label>
+          <input type="text" className="input" style={fieldStyle} value={data.parentFocus} placeholder={t("wait_par_focus_ph")} onChange={(e) => setData((d) => ({ ...d, parentFocus: e.target.value }))} />
+        </div>
+        <div>
+          <label style={labelStyle}>{t("wait_par_goal_q")}</label>
+          <input type="text" className="input" style={fieldStyle} value={data.parentGoal} placeholder={t("wait_par_goal_ph")} onChange={(e) => setData((d) => ({ ...d, parentGoal: e.target.value }))} />
+        </div>
+      </div>
+    );
+  }
+
+  if (data.type === "School") {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: 20, flex: 1 }}>
+        <div>
+          <h2 style={{ fontFamily: "'Instrument Serif',Georgia,serif", fontSize: "clamp(22px,3vw,30px)", fontWeight: 400, color: "var(--text-1)", lineHeight: 1.3, marginBottom: 8 }}>{heading}</h2>
+          <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 13, color: "var(--text-3)" }}>{sub}</p>
+        </div>
+        <div>
+          <label style={labelStyle}>{t("wait_sch_role_q")}</label>
+          <input type="text" className="input" style={fieldStyle} value={data.schoolRole} placeholder={t("wait_sch_role_ph")} onChange={(e) => setData((d) => ({ ...d, schoolRole: e.target.value }))} />
+        </div>
+        <div>
+          <label style={labelStyle}>{t("wait_sch_learners_q")}</label>
+          <input type="text" className="input" style={fieldStyle} value={data.learnerCount} placeholder={t("wait_sch_learners_ph")} onChange={(e) => setData((d) => ({ ...d, learnerCount: e.target.value }))} />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 20, flex: 1 }}>
+      <div>
+        <h2 style={{ fontFamily: "'Instrument Serif',Georgia,serif", fontSize: "clamp(22px,3vw,30px)", fontWeight: 400, color: "var(--text-1)", lineHeight: 1.3, marginBottom: 8 }}>{heading}</h2>
+        <p style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 13, color: "var(--text-3)" }}>{sub}</p>
+      </div>
+      <div>
+        <label style={labelStyle}>{t("wait_inst_focus_q")}</label>
+        <input type="text" className="input" style={fieldStyle} value={data.instFocus} placeholder={t("wait_inst_focus_ph")} onChange={(e) => setData((d) => ({ ...d, instFocus: e.target.value }))} />
+      </div>
+      <div>
+        <label style={labelStyle}>{t("wait_inst_goal_q")}</label>
+        <input type="text" className="input" style={fieldStyle} value={data.instGoal} placeholder={t("wait_inst_goal_ph")} onChange={(e) => setData((d) => ({ ...d, instGoal: e.target.value }))} />
+      </div>
+    </div>
+  );
+}
+
+function Chip({ selected, onClick, children }: { selected: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      style={{
+        padding: "10px 14px",
+        borderRadius: 100,
+        fontFamily: "'Space Grotesk',sans-serif",
+        fontSize: 12,
+        fontWeight: 600,
+        cursor: "pointer",
+        border: `1px solid ${selected ? "var(--purple-border)" : "var(--border)"}`,
+        background: selected ? "var(--purple-dim)" : "var(--surface-2)",
+        color: selected ? "var(--purple)" : "var(--text-2)",
+        transition: "all 0.15s",
+      }}
+    >
+      {children}
+    </button>
   );
 }
 
@@ -243,10 +529,16 @@ function StepEmail({ name, value, onChange, onKeyDown, t }: { name: string; valu
 }
 
 function StepReview({ data, loading, error, onSubmit, t }: { data: FormData; loading: boolean; error: string; onSubmit: () => void; t: (k: string) => string }) {
+  const profile = buildProfile(data);
+  const profileRows = Object.entries(profile)
+    .filter(([, v]) => v)
+    .map(([k, v]) => ({ label: k.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase()), value: v }));
+
   const rows: { label: string; value: string }[] = [
     { label: t("wait_rev_type"),  value: data.type },
     { label: t("wait_rev_name"),  value: `${data.firstName} ${data.surname}`.trim() },
     { label: t("wait_rev_email"), value: data.email },
+    ...(profileRows.length ? [{ label: t("wait_rev_profile"), value: profileRows.map((r) => r.value).join(" · ") }] : []),
     ...(data.org ? [{ label: t("wait_rev_org"), value: data.org }] : []),
   ];
   return (

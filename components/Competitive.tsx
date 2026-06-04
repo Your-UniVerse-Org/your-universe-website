@@ -265,7 +265,7 @@ export default function Competitive() {
                 {t(`comp_${r}_feat` as Parameters<typeof t>[0])}
               </p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: 10, padding: "12px 14px" }}>
+                <div style={{ background: "var(--comp-muted-bg)", borderRadius: 10, padding: "12px 14px" }}>
                   <p style={{ fontSize: 10, fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.08em", marginBottom: 6, textTransform: "uppercase" }}>
                     {t("comp_mobile_other")}
                   </p>

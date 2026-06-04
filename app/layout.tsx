@@ -81,8 +81,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
      * The LanguageProvider (in ClientShell) dynamically sets document.documentElement.lang
      * to "en" or "af" based on the user's saved preference in localStorage.
      */
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning data-theme="light">
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){document.documentElement.setAttribute('data-theme','light');})();`,
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Google Fonts loaded here (not in globals.css) to avoid PostCSS @import ordering issues */}
