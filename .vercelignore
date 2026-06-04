@@ -1,0 +1,31 @@
+# Dependencies and build output — never upload; Vercel installs/builds on the server
+node_modules
+.next
+out
+build
+.turbo
+
+# Vercel local metadata and prebuilt artifacts
+.vercel
+
+# Git and env (secrets stay in Vercel dashboard)
+.git
+.env
+.env.*
+
+# Logs and OS junk
+*.log
+.DS_Store
+Thumbs.db
+
+# Dev-only scripts (not used in production build)
+scripts
+write-all.mjs
+write-fixes.mjs
+write-production.mjs
+write-responsive.mjs
+
+# Docs and local tooling
+AUDIT.md
+REDESIGN_STRATEGY.md
+coverage

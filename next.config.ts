@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  /* Keep builds scoped to this repo (avoids picking up parent lockfiles on local/Vercel) */
+  turbopack: {
+    root: process.cwd(),
+  },
   images: {
     remotePatterns: [
       /* Pexels — free commercial license, attribution appreciated */
