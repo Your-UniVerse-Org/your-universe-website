@@ -133,7 +133,7 @@ export default function Platform() {
             /* pexels/6238043 — Monstera Production education series */
             { src: "https://images.pexels.com/photos/6238043/pexels-photo-6238043.jpeg?auto=compress&cs=tinysrgb&w=600&h=340&fit=crop", alt: "Student building their academic profile" },
             /* photo-1517486808906-6ca8b3f04846 – students at laptops together */
-            { src: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&h=340&fit=crop&q=80", alt: "Students discovering career pathways with Your-UniVerse" },
+            { src: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&h=340&fit=crop&q=80", alt: "Students discovering career pathways with YourUniverse" },
           ].map((img, i) => (
             <div key={i} style={{ position: "relative", aspectRatio: "16/9", borderRadius: 12, overflow: "hidden", border: "1px solid var(--border)" }}>
               <div className="media-overlay-hero" style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none" }} />

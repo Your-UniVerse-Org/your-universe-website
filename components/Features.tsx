@@ -119,7 +119,7 @@ export default function Features() {
           <div style={{ position: "absolute", inset: 0, background: "rgba(119,77,255,0.07)", zIndex: 1, pointerEvents: "none" }} />
           <Image
             src="https://images.pexels.com/photos/6238089/pexels-photo-6238089.jpeg?auto=compress&cs=tinysrgb&w=1600&h=700&fit=crop&crop=center"
-            alt="Students and educators using the Your-UniVerse platform"
+            alt="Students and educators using the YourUniverse platform"
             fill sizes="(max-width:768px) 100vw, 100vw"
             style={{ objectFit: "cover", objectPosition: "center 35%" }}
           />

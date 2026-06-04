@@ -34,7 +34,7 @@ async function sendEmail(to: string, subject: string, html: string) {
     method: "POST",
     headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      from: "Your-UniVerse <noreply@youruniverse.co.za>",
+      from: "YourUniverse <noreply@youruniverse.co.za>",
       to,
       subject,
       html,
@@ -113,9 +113,9 @@ export async function POST(req: NextRequest) {
     const biz = isSchool || isInstitution;
     await sendEmail(
       entry.email,
-      "You're on the list | Your-UniVerse",
+      "You're on the list | YourUniverse",
       `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:40px 32px;background:#0F172A;color:#F1F5F9;border-radius:12px">
-        <p style="font-size:20px;font-weight:700;letter-spacing:-0.02em;color:#F1F5F9;margin:0 0 4px">Your-UniVerse</p>
+        <p style="font-size:20px;font-weight:700;letter-spacing:-0.02em;color:#F1F5F9;margin:0 0 4px">YourUniverse</p>
         <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#774DFF;margin:0 0 32px">Educational Decision Intelligence</p>
         <h1 style="font-size:22px;font-weight:600;color:#F1F5F9;margin:0 0 16px">You&rsquo;re on the list, ${entry.name}.</h1>
         <p style="color:#94A3B8;line-height:1.7;margin:0 0 24px">

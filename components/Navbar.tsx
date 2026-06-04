@@ -163,7 +163,7 @@ export default function Navbar() {
         <div className="container">
           <div className="nav-inner">
 
-            <Link href="/" aria-label="Your-UniVerse Home" onClick={closeAll}>
+            <Link href="/" aria-label="YourUniverse Home" onClick={closeAll}>
               <Logo height={28} white={logoWhite} />
             </Link>
 
@@ -263,7 +263,7 @@ export default function Navbar() {
               <Link
                 href="/early-access"
                 className="btn btn-primary nav-cta"
-                aria-label="Request early access to Your-UniVerse"
+                aria-label="Request early access to YourUniverse"
               >
                 {t("nav_cta")}
               </Link>

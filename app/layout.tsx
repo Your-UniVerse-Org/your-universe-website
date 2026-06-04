@@ -12,8 +12,8 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://youruniverse.co.za
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Your-UniVerse | Educational Decision Intelligence Platform",
-    template: "%s | Your-UniVerse",
+    default: "YourUniverse | Educational Decision Intelligence Platform",
+    template: "%s | YourUniverse",
   },
   description:
     "South Africa's first educational decision intelligence platform. AI-powered career guidance, psychometric profiling, subject selection, and institutional recruitment. From Grade 9 to graduation.",
@@ -27,12 +27,12 @@ export const metadata: Metadata = {
     "TVET career guidance",
     "psychometric career testing",
     "school career counselling software",
-    "Your-UniVerse",
+    "YourUniverse",
     "educational decision intelligence",
   ],
   authors: [{ name: "Lynxio Tech", url: "https://lynxio.tech" }],
   creator: "Lynxio Tech",
-  publisher: "Your-UniVerse",
+  publisher: "YourUniverse",
   robots: {
     index: true,
     follow: true,
@@ -42,8 +42,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_ZA",
     url: BASE_URL,
-    siteName: "Your-UniVerse",
-    title: "Your-UniVerse | Educational Decision Intelligence Platform",
+    siteName: "YourUniverse",
+    title: "YourUniverse | Educational Decision Intelligence Platform",
     description:
       "South Africa's first educational decision intelligence platform. AI-powered career guidance, psychometric profiling, and institutional recruitment. From Grade 9 to graduation.",
     images: [
@@ -51,13 +51,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Your-UniVerse: Educational Decision Intelligence Platform",
+        alt: "YourUniverse: Educational Decision Intelligence Platform",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Your-UniVerse | Educational Decision Intelligence Platform",
+    title: "YourUniverse | Educational Decision Intelligence Platform",
     description:
       "South Africa's first educational decision intelligence platform. From Grade 9 to graduation.",
     images: ["/og-image.png"],

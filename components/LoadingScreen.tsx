@@ -30,7 +30,7 @@ export default function LoadingScreen({ onComplete }: { onComplete?: () => void 
         <motion.div
           key="loading"
           role="status"
-          aria-label="Loading Your-UniVerse"
+          aria-label="Loading YourUniverse"
           aria-live="polite"
           initial={{ opacity: 1 }}
           exit={{
@@ -102,7 +102,7 @@ export default function LoadingScreen({ onComplete }: { onComplete?: () => void 
               color: "#475569",
             }}
           >
-            Your-UniVerse
+            YourUniverse
           </motion.p>
 
           <motion.div

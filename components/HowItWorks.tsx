@@ -18,7 +18,7 @@ const STEPS = [
     n: "01",
     label: "Discover",
     title: "Know who you are before choosing what to study",
-    body: "Complete a short psychometric profile. Your-UniVerse builds a picture of your strengths, learning style, and interests, giving you a starting point rooted in real self-knowledge, not guesswork.",
+    body: "Complete a short psychometric profile. YourUniverse builds a picture of your strengths, learning style, and interests, giving you a starting point rooted in real self-knowledge, not guesswork.",
     detail: "Psychometrics, personality insights, strength mapping",
     accent: "#774DFF",
     /*
@@ -48,7 +48,7 @@ const STEPS = [
     n: "03",
     label: "Grow",
     title: "Build your portfolio from Grade 9 to Matric",
-    body: "Track academic progress, co-curricular activities, and achievements year by year. Your-UniVerse generates a verified learner portfolio that schools, universities, and employers can trust.",
+    body: "Track academic progress, co-curricular activities, and achievements year by year. YourUniverse generates a verified learner portfolio that schools, universities, and employers can trust.",
     detail: "Progress tracking, portfolio builder, institution reports",
     accent: "#774DFF",
     /*
@@ -63,7 +63,7 @@ const STEPS = [
     n: "04",
     label: "Connect",
     title: "Get discovered by universities and employers",
-    body: "Institutions on the Your-UniVerse network receive anonymised talent intelligence. When your profile is a strong match, they come to you, reversing the traditional application process.",
+    body: "Institutions on the YourUniverse network receive anonymised talent intelligence. When your profile is a strong match, they come to you, reversing the traditional application process.",
     detail: "Institutional matching, talent discovery, direct outreach",
     accent: "#FE4A23",
     /*
@@ -271,7 +271,7 @@ export default function HowItWorks() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="body-lg"
           >
-            Your-UniVerse meets you where you are and walks alongside you at every stage of your educational journey.
+            YourUniverse meets you where you are and walks alongside you at every stage of your educational journey.
           </motion.p>
         </div>
 
