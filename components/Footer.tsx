@@ -85,7 +85,7 @@ export default function Footer() {
           gap: 16,
         }}>
           <p className="small">
-            &copy; {new Date().getFullYear()} YourUniverse. {t("foot_copyright")}
+            &copy; {new Date().getFullYear()} Your-UniVerse. {t("foot_copyright")}
           </p>
           <a
             href="mailto:hello@youruniverse.co.za"

@@ -1,5 +1,5 @@
 /**
- * Illustrations — Human-first illustration library for YourUniverse
+ * Illustrations — Human-first illustration library for Your-UniVerse
  *
  * Design philosophy:
  *  - Warm, human characters in real learning moments
@@ -28,7 +28,7 @@ const CARD   = "rgba(16,24,40,0.92)";
 /* ─────────────────────────────────────────────────────────────────────────────
    StudentHero — Main hero illustration
    "Zola" — Grade 10 student, South African, full of curiosity and ambition.
-   She's sitting forward, holding a phone showing her YourUniverse dashboard,
+   She's sitting forward, holding a phone showing her Your-UniVerse dashboard,
    surrounded by the things that represent her future: a cap, subject orbits,
    career sparkles, and her platform doing the thinking alongside her.
    ───────────────────────────────────────────────────────────────────────────── */
@@ -39,7 +39,7 @@ export function StudentHero({ className }: { className?: string }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      aria-label="South African student Zola using YourUniverse"
+      aria-label="South African student Zola using Your-UniVerse"
       role="img"
       style={{ width: "100%", maxWidth: 460, height: "auto" }}
     >
@@ -190,7 +190,7 @@ export function StudentHero({ className }: { className?: string }) {
       <rect x="188" y="456" width="66" height="12" rx="6"
         fill={`rgba(119,77,255,0.15)`} stroke={`rgba(119,77,255,0.32)`} strokeWidth="0.8"/>
       <text x="221" y="465" textAnchor="middle"
-        fill={P_LITE} fontSize="7" fontFamily="'Space Grotesk',sans-serif" fontWeight="700">YourUniverse</text>
+        fill={P_LITE} fontSize="7" fontFamily="'Space Grotesk',sans-serif" fontWeight="700">Your-UniVerse</text>
       {/* Home indicator */}
       <rect x="213" y="476" width="34" height="3" rx="1.5" fill={`rgba(255,255,255,0.15)`}/>
 
@@ -359,7 +359,7 @@ export function StudentHero({ className }: { className?: string }) {
 
 /* ─────────────────────────────────────────────────────────────────────────────
    DecisionPath — Two students facing the Grade 9 crossroads
-   Human story: two learners side by side — one has YourUniverse guidance,
+   Human story: two learners side by side — one has Your-UniVerse guidance,
    one is guessing. Warmth + clarity about WHY the platform matters.
    ───────────────────────────────────────────────────────────────────────────── */
 export function DecisionPath({ className }: { className?: string }) {
@@ -430,7 +430,7 @@ export function DecisionPath({ className }: { className?: string }) {
       <text x="210" y="52" textAnchor="middle"
         fill={O_LITE} fontSize="10" fontFamily="'Space Grotesk',sans-serif" fontWeight="700">GRADE 9 DECISION</text>
 
-      {/* ── "WITH YourUniverse" student (right) — confident, supported ── */}
+      {/* ── "WITH Your-UniVerse" student (right) — confident, supported ── */}
       {/* Shadow */}
       <ellipse cx="328" cy="318" rx="44" ry="8" fill={`rgba(0,0,0,0.18)`}/>
       {/* Body */}
@@ -494,7 +494,7 @@ export function DecisionPath({ className }: { className?: string }) {
       <text x="92" y="344" textAnchor="middle"
         fill={`rgba(254,74,35,0.55)`} fontSize="9" fontFamily="'Space Grotesk',sans-serif" fontWeight="700">WITHOUT GUIDANCE</text>
       <text x="328" y="344" textAnchor="middle"
-        fill={`rgba(119,77,255,0.70)`} fontSize="9" fontFamily="'Space Grotesk',sans-serif" fontWeight="700">WITH YOURUNIVERSE</text>
+        fill={`rgba(119,77,255,0.70)`} fontSize="9" fontFamily="'Space Grotesk',sans-serif" fontWeight="700">WITH Your-UniVerse</text>
     </svg>
   );
 }

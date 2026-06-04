@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "For Schools",
-  description: "How YourUniverse partners with schools, universities, TVET colleges, and businesses across South Africa to transform educational outcomes for every learner.",
+  description: "How Your-UniVerse partners with schools, universities, TVET colleges, and businesses across South Africa to transform educational outcomes for every learner.",
 };
 
 export default function ForSchoolsPage() {

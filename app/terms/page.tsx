@@ -21,11 +21,11 @@ export default function Page() {
         <div style={{ display: "flex", flexDirection: "column", gap: 40, color: "var(--text-2)", fontSize: 15, lineHeight: 1.8 }}>
           <section>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-1)", marginBottom: 16 }}>1. Acceptance</h2>
-            <p>By accessing or registering on the YourUniverse platform you agree to these Terms of Service. If you do not agree, please do not use the platform.</p>
+            <p>By accessing or registering on the Your-UniVerse platform you agree to these Terms of Service. If you do not agree, please do not use the platform.</p>
           </section>
           <section>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-1)", marginBottom: 16 }}>2. Platform status</h2>
-            <p>YourUniverse is currently in pre-launch. Features, pricing, and availability are subject to change. Registration for early access does not constitute a binding commercial agreement.</p>
+            <p>Your-UniVerse is currently in pre-launch. Features, pricing, and availability are subject to change. Registration for early access does not constitute a binding commercial agreement.</p>
           </section>
           <section>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-1)", marginBottom: 16 }}>3. Intellectual property</h2>

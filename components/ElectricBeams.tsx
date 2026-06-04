@@ -3,7 +3,7 @@
 /**
  * ElectricBeams — full-page fixed background layer
  * Animated SVG electrical arcs + travelling particles behind all sections (not hero).
- * Updated to YourUniverse brand palette: #774DFF (purple) and #FE4A23 (orange).
+ * Updated to Your-UniVerse brand palette: #774DFF (purple) and #FE4A23 (orange).
  * Purely decorative, pointer-events: none.
  */
 export default function ElectricBeams() {

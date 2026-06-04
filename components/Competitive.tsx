@@ -136,7 +136,7 @@ export default function Competitive() {
         >
           <table
             role="table"
-            aria-label="Feature comparison between YourUniverse and traditional platforms"
+            aria-label="Feature comparison between Your-UniVerse and traditional platforms"
             style={{ width: "100%", borderCollapse: "collapse" }}
           >
             <thead>
@@ -190,7 +190,7 @@ export default function Competitive() {
                     background: "rgba(119,77,255,0.06)",
                   }}
                 >
-                  YourUniverse
+                  Your-UniVerse
                 </th>
               </tr>
             </thead>

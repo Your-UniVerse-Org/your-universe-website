@@ -1,12 +1,12 @@
 /**
- * Logo — YourUniverse official brand mark
+ * Logo — Your-UniVerse official brand mark
  *
  * Assets used (all white, transparent background):
  *   /your universe logo.svg  — full horizontal wordmark (mark + text)
  *   /your universe icon.svg  — vertical layout (mark + smaller text)
  *
  * For compact nav/footer: renders the orbital icon mark as an inline SVG
- * (same path used in LoadingScreen) + "YourUniverse" wordmark in Space Grotesk.
+ * (same path used in LoadingScreen) + "Your-UniVerse" wordmark in Space Grotesk.
  * This ensures crisp rendering at any small size.
  *
  * Per brief: logo is exclusively black or white. Default is white for dark bg.
@@ -26,7 +26,7 @@ interface LogoProps {
   /** White (for dark bg) or dark (for light bg). Default: true (white) */
   white?: boolean;
   /**
-   * wordmark  — inline orbital mark + "YourUniverse" text (default, perfect for nav)
+   * wordmark  — inline orbital mark + "Your-UniVerse" text (default, perfect for nav)
    * full      — the full official /your universe logo.svg as an img
    * iconOnly  — the official /your universe icon.svg as an img
    */
@@ -84,7 +84,7 @@ export default function Logo({
             whiteSpace: "nowrap",
           }}
         >
-          YourUniverse
+          Your-UniVerse
         </span>
       </span>
     );
@@ -113,7 +113,7 @@ export default function Logo({
     >
       <Image
         src={src}
-        alt="YourUniverse"
+        alt="Your-UniVerse"
         width={computedWidth}
         height={height}
         priority
@@ -141,7 +141,7 @@ export function LogoMark({ size = 36, white = true }: { size?: number; white?: b
       width={w}
       height={size}
       fill="none"
-      aria-label="YourUniverse mark"
+      aria-label="Your-UniVerse mark"
       style={{ display: "block", flexShrink: 0 }}
     >
       <path d={MARK_PATH} fill={fill} fillRule="evenodd" clipRule="evenodd" />

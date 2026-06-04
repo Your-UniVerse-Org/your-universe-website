@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Platform",
-  description: "Explore how YourUniverse works: AI recommendation engine, psychometric analysis, predictive analytics, gamification, and more. Built exclusively for South African learners.",
+  description: "Explore how Your-UniVerse works: AI recommendation engine, psychometric analysis, predictive analytics, gamification, and more. Built exclusively for South African learners.",
 };
 
 export default function PlatformPage() {

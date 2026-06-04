@@ -381,7 +381,7 @@ export function ComparisonGraphic() {
 
       {/* Legend */}
       <line x1="92" y1="278" x2="112" y2="278" stroke="rgba(61,127,255,0.75)" strokeWidth="2"/>
-      <text x="117" y="282" fontFamily="Space Grotesk,sans-serif" fontSize="8" fontWeight="600" fill="rgba(61,127,255,0.8)">YourUniverse</text>
+      <text x="117" y="282" fontFamily="Space Grotesk,sans-serif" fontSize="8" fontWeight="600" fill="rgba(61,127,255,0.8)">Your-UniVerse</text>
       <line x1="200" y1="278" x2="220" y2="278" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" strokeDasharray="4 3"/>
       <text x="225" y="282" fontFamily="Space Grotesk,sans-serif" fontSize="8" fill="rgba(255,255,255,0.3)">Others</text>
     </Wrap>

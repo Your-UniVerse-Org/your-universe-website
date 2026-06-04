@@ -222,9 +222,9 @@ export default function Stats() {
             transition={{ duration: 0.65, delay: 0.1 }}
             className="display-2" style={{ marginBottom: 20 }}
           >
-            {t("stats_h2_a")}{" "}
+                {t("stats_h2_a")}{" "}
             <span className="text-gradient">{t("stats_h2_b")}</span>
-          </motion.h2>
+              </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -232,7 +232,7 @@ export default function Stats() {
           >
             {t("stats_sub")}
           </motion.p>
-        </div>
+            </div>
 
         {/* Stat cards */}
         <div className="stats-grid">

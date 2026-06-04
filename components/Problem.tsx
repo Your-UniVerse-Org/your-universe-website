@@ -191,7 +191,7 @@ export default function Problem() {
               Grade 9 Decision Gap
             </span>
             <span className="pill pill-orange">
-              YourUniverse solves this
+              Your-UniVerse solves this
             </span>
           </div>
         </motion.div>
