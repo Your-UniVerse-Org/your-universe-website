@@ -18,9 +18,9 @@ export default function Footer() {
       { label: t("foot_req_access"),    href: "/early-access" },
     ],
     [t("foot_col_company")]: [
-      { label: t("foot_about"),   href: "#" },
-      { label: t("foot_lynxio"),  href: "#" },
-      { label: t("foot_careers"), href: "#" },
+      { label: t("foot_about"),   href: "/about" },
+      { label: t("foot_lynxio"),  href: "https://lynxiotech.com" },
+      { label: t("foot_careers"), href: "https://lynxiotech.com" },
     ],
     [t("foot_col_legal")]: [
       { label: t("foot_privacy"), href: "/privacy" },
@@ -48,7 +48,9 @@ export default function Footer() {
               {t("foot_product_of")}
             </p>
             <a
-              href="#"
+              href="https://lynxiotech.com"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 14, fontWeight: 600, color: "var(--purple)", transition: "opacity 0.2s" }}
               onMouseEnter={(e) => { (e.target as HTMLElement).style.opacity = "0.75"; }}
               onMouseLeave={(e) => { (e.target as HTMLElement).style.opacity = "1"; }}
@@ -66,7 +68,13 @@ export default function Footer() {
               <ul style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 {items.map((item) => (
                   <li key={item.href + item.label}>
-                    <Link href={item.href} className="footer-link">{item.label}</Link>
+                    {item.href.startsWith("http") ? (
+                      <a href={item.href} className="footer-link" target="_blank" rel="noopener noreferrer">
+                        {item.label}
+                      </a>
+                    ) : (
+                      <Link href={item.href} className="footer-link">{item.label}</Link>
+                    )}
                   </li>
                 ))}
               </ul>

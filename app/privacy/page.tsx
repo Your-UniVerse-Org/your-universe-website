@@ -37,7 +37,7 @@ export default function Page() {
           </section>
           <section>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-1)", marginBottom: 16 }}>5. POPIA compliance</h2>
-            <p>We process personal information in accordance with the Protection of Personal Information Act 4 of 2013 (POPIA). You have the right to access, correct, and request deletion of your personal information at any time. To exercise these rights, contact us at <a href="mailto:privacy@youruniverse.co.za" style={{ color: "var(--blue)" }}>privacy@youruniverse.co.za</a>.</p>
+            <p>We process personal information in accordance with the Protection of Personal Information Act 4 of 2013 (POPIA). You have the right to access, correct, and request deletion of your personal information at any time. To exercise these rights, contact us at <a href="mailto:privacy@youruniversehub.com" style={{ color: "var(--blue)" }}>privacy@youruniversehub.com</a>.</p>
           </section>
           <section>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-1)", marginBottom: 16 }}>6. Cookies</h2>
@@ -45,7 +45,7 @@ export default function Page() {
           </section>
           <section>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-1)", marginBottom: 16 }}>7. Contact</h2>
-            <p>Questions about this policy may be directed to <a href="mailto:privacy@youruniverse.co.za" style={{ color: "var(--blue)" }}>privacy@youruniverse.co.za</a>.</p>
+            <p>Questions about this policy may be directed to <a href="mailto:privacy@youruniversehub.com" style={{ color: "var(--blue)" }}>privacy@youruniversehub.com</a>.</p>
           </section>
         </div>
       </div>
