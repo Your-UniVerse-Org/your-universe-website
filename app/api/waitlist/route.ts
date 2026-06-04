@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
           <tr><td style="padding:10px 0;color:#94A3B8;width:100px">Type</td><td style="color:#F1F5F9;font-weight:600">${entry.type}</td></tr>
           <tr><td style="padding:10px 0;color:#94A3B8">Name</td><td style="color:#F1F5F9">${entry.name}</td></tr>
           <tr><td style="padding:10px 0;color:#94A3B8">Email</td><td style="color:#774DFF">${entry.email}</td></tr>
-          <tr><td style="padding:10px 0;color:#94A3B8">Organisation</td><td style="color:#F1F5F9">${entry.org || "—"}</td></tr>
+          <tr><td style="padding:10px 0;color:#94A3B8">Organisation</td><td style="color:#F1F5F9">${entry.org || "N/A"}</td></tr>
           <tr><td style="padding:10px 0;color:#94A3B8">Submitted</td><td style="color:#F1F5F9">${new Date(entry.timestamp).toLocaleString("en-ZA")}</td></tr>
         </table>
       </div>`

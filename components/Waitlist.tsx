@@ -10,7 +10,7 @@ interface FormData { type: UserType; firstName: string; surname: string; email: 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const TYPE_OPTIONS: { label: string; sub: string; value: UserType; icon: React.ReactNode }[] = [
-  { value: "Student",     label: "Student",           sub: "Grade 9 – Postgrad", icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3.33 1.67 8.67 1.67 12 0v-5"/></svg> },
+  { value: "Student",     label: "Student",           sub: "Grade 9 to Postgrad", icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3.33 1.67 8.67 1.67 12 0v-5"/></svg> },
   { value: "Parent",      label: "Parent",            sub: "Supporting my child", icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> },
   { value: "School",      label: "Educator / School", sub: "Primary or secondary", icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> },
   { value: "Institution", label: "University / TVET", sub: "Higher education",    icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M2 7l10-5 10 5-10 5z"/><path d="M6 12v5"/><path d="M18 12v5"/><path d="M2 17h20"/></svg> },

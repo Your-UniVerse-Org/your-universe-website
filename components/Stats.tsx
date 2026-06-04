@@ -177,7 +177,7 @@ function SAMap() {
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#774DFF" }}/>
           <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 11, color: "var(--text-3)", fontWeight: 600, letterSpacing: "0.05em" }}>
-            LAUNCHING · GAUTENG
+            LAUNCHING, GAUTENG
           </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>

@@ -160,7 +160,7 @@ export default function Navbar() {
         <div className="container">
           <div className="nav-inner">
 
-            <Link href="/" aria-label="YourUniverse – Home" onClick={closeAll}>
+            <Link href="/" aria-label="YourUniverse Home" onClick={closeAll}>
               <Logo height={28} white />
             </Link>
 

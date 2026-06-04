@@ -213,7 +213,7 @@ export function SAMapGraphic() {
       <circle cx="126" cy="19" r="4" fill="rgba(61,127,255,0.5)"
         style={{ animation: "glow-pulse 1.8s ease-in-out infinite" }} />
       <text x="200" y="23" textAnchor="middle" fontFamily="Space Grotesk,sans-serif"
-        fontSize="9" fontWeight="700" letterSpacing="0.07em" fill="rgba(61,127,255,0.9)">9 PROVINCES · FREE</text>
+        fontSize="9" fontWeight="700" letterSpacing="0.07em" fill="rgba(61,127,255,0.9)">9 PROVINCES, FREE</text>
     </Wrap>
   );
 }
@@ -615,7 +615,7 @@ export function PersonasGraphic() {
 
       {/* bottom label */}
       <text x="120" y="212" textAnchor="middle" fontFamily="Space Grotesk,sans-serif" fontSize="8.5" letterSpacing="0.07em"
-        fill="rgba(255,255,255,0.2)">EVERY STAGE · EVERY LEARNER</text>
+        fill="rgba(255,255,255,0.2)">EVERY STAGE, EVERY LEARNER</text>
     </Wrap>
   );
 }
@@ -716,7 +716,7 @@ export function TechHeroGraphic() {
       <rect x="100" y="63" width="100" height="72" rx="8" fill="rgba(13,17,38,0.95)" stroke="rgba(61,127,255,0.45)" strokeWidth="1.5" />
       <text x="150" y="93" textAnchor="middle" fontFamily="Space Grotesk,sans-serif" fontSize="10" fontWeight="700" letterSpacing="0.08em" fill="rgba(61,127,255,0.8)">INTELLIGENCE</text>
       <text x="150" y="109" textAnchor="middle" fontFamily="Instrument Serif,Georgia,serif" fontSize="14" fill="rgba(255,255,255,0.6)">Engine</text>
-      <text x="150" y="124" textAnchor="middle" fontFamily="Space Grotesk,sans-serif" fontSize="8" fill="rgba(255,255,255,0.25)" letterSpacing="0.04em">AI · ML · NLP · PSYCH</text>
+      <text x="150" y="124" textAnchor="middle" fontFamily="Space Grotesk,sans-serif" fontSize="8" fill="rgba(255,255,255,0.25)" letterSpacing="0.04em">AI, ML, NLP, PSYCH</text>
 
       {/* chip legs */}
       {[118,132,148,162,178].map((x,i) => (

@@ -18,8 +18,8 @@ const STEPS = [
     n: "01",
     label: "Discover",
     title: "Know who you are before choosing what to study",
-    body: "Complete a short psychometric profile. YourUniverse builds a picture of your strengths, learning style, and interests — giving you a starting point rooted in real self-knowledge, not guesswork.",
-    detail: "Psychometrics · Personality insights · Strength mapping",
+    body: "Complete a short psychometric profile. YourUniverse builds a picture of your strengths, learning style, and interests, giving you a starting point rooted in real self-knowledge, not guesswork.",
+    detail: "Psychometrics, personality insights, strength mapping",
     accent: "#774DFF",
     /*
      * Photo: Pexels — diverse students discussing project at table
@@ -33,8 +33,8 @@ const STEPS = [
     n: "02",
     label: "Plan",
     title: "Match your Grade 9 subject choices to your future",
-    body: "Our AI cross-references your profile with university entry requirements, career earnings data, and SA curriculum pathways. You see exactly which subjects open which doors — before you choose.",
-    detail: "Subject matching · APS calculator · Career pathways",
+    body: "Our AI cross-references your profile with university entry requirements, career earnings data, and SA curriculum pathways. You see exactly which subjects open which doors before you choose.",
+    detail: "Subject matching, APS calculator, career pathways",
     accent: "#FE4A23",
     /*
      * Photo: Pexels — woman taking notes from laptop
@@ -49,7 +49,7 @@ const STEPS = [
     label: "Grow",
     title: "Build your portfolio from Grade 9 to Matric",
     body: "Track academic progress, co-curricular activities, and achievements year by year. YourUniverse generates a verified learner portfolio that schools, universities, and employers can trust.",
-    detail: "Progress tracking · Portfolio builder · Institution reports",
+    detail: "Progress tracking, portfolio builder, institution reports",
     accent: "#774DFF",
     /*
      * Photo: Unsplash — students studying together in a group
@@ -63,8 +63,8 @@ const STEPS = [
     n: "04",
     label: "Connect",
     title: "Get discovered by universities and employers",
-    body: "Institutions on the YourUniverse network receive anonymised talent intelligence. When your profile is a strong match, they come to you — reversing the traditional application process.",
-    detail: "Institutional matching · Talent discovery · Direct outreach",
+    body: "Institutions on the YourUniverse network receive anonymised talent intelligence. When your profile is a strong match, they come to you, reversing the traditional application process.",
+    detail: "Institutional matching, talent discovery, direct outreach",
     accent: "#FE4A23",
     /*
      * Photo: Pexels — graduation / achievement
@@ -178,7 +178,7 @@ function MobileStepCard({ step, progress }: { step: typeof STEPS[0]; progress: n
           background: step.accent, borderRadius: 8, padding: "4px 12px",
           fontFamily: "'Space Grotesk',sans-serif", fontSize: 10, fontWeight: 800,
           color: "white", letterSpacing: "0.1em",
-        }}>Step {step.n} · {step.label}</div>
+        }}>Step {step.n}: {step.label}</div>
       </motion.div>
 
       {/* Text */}
@@ -263,7 +263,7 @@ export default function HowItWorks() {
               fontWeight: 700, color: "var(--text-1)", lineHeight: 1.15, marginBottom: 16,
             }}
           >
-            From Grade 9 to graduation — <span className="text-gradient">and beyond.</span>
+            From Grade 9 to graduation, <span className="text-gradient">and beyond.</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 16 }}

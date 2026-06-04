@@ -7,7 +7,7 @@ import { LaunchHeroGraphic } from "@/components/SectionGraphics";
 export const metadata: Metadata = {
   title: "Request Early Access",
   description:
-    "Join the waitlist for YourUniverse — South Africa's first AI-powered educational decision intelligence platform. Free for every student, always.",
+    "Join the waitlist for YourUniverse, South Africa's first AI-powered educational decision intelligence platform. Free for every student, always.",
 };
 
 export default function EarlyAccessPage() {
@@ -53,7 +53,7 @@ export default function EarlyAccessPage() {
               </h1>
               <p className="body-lg" style={{ maxWidth: 500 }}>
                 We&apos;re onboarding schools, learners, and institutional
-                partners in cohorts. Reserve your place — it&apos;s completely
+                partners in cohorts. Reserve your place. It&apos;s completely
                 free for every student.
               </p>
             </div>

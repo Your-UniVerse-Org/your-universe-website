@@ -132,7 +132,7 @@ export default function Features() {
               Every feature designed around the learner, not the institution.
             </p>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              {["NSC + IEB Ready", "Free for Students", "AI-Powered", "Grade 9–12"].map(tag => (
+              {["NSC + IEB Ready", "Free for Students", "AI-Powered", "Grade 9 to 12"].map(tag => (
                 <span key={tag} style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 12, fontWeight: 600, color: "rgba(241,245,249,0.80)", background: "rgba(119,77,255,0.22)", border: "1px solid rgba(119,77,255,0.35)", borderRadius: 99, padding: "5px 14px", backdropFilter: "blur(8px)" }}>
                   {tag}
                 </span>
