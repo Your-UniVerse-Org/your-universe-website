@@ -21,7 +21,7 @@ export default function Page() {
         <div style={{ display: "flex", flexDirection: "column", gap: 40, color: "var(--text-2)", fontSize: 15, lineHeight: 1.8 }}>
           <section>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-1)", marginBottom: 16 }}>1. Who we are</h2>
-            <p>Your Uni-Verse is operated by Lynxio Tech (Pty) Ltd, a South African technology company. We build decision intelligence tools for the education sector. References to &ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo; in this policy refer to Lynxio Tech (Pty) Ltd.</p>
+            <p>YourUniverse is operated by Lynxio Tech (Pty) Ltd, a South African technology company. We build decision intelligence tools for the education sector. References to &ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo; in this policy refer to Lynxio Tech (Pty) Ltd.</p>
           </section>
           <section>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-1)", marginBottom: 16 }}>2. Information we collect</h2>
@@ -29,7 +29,7 @@ export default function Page() {
           </section>
           <section>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-1)", marginBottom: 16 }}>3. How we use your information</h2>
-            <p>Your information is used to send you registration confirmations, early access updates, and launch announcements related to Your Uni-Verse. We do not sell, rent, or share your personal information with third parties for marketing purposes.</p>
+            <p>Your information is used to send you registration confirmations, early access updates, and launch announcements related to YourUniverse. We do not sell, rent, or share your personal information with third parties for marketing purposes.</p>
           </section>
           <section>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-1)", marginBottom: 16 }}>4. Data retention</h2>
