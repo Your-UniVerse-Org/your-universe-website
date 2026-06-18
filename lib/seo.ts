@@ -10,6 +10,11 @@ export const GA_MEASUREMENT_ID =
   process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ??
   "G-TZETZE06WE";
 
+/** Google Search Console domain verification (HTML meta tag content value) */
+export const GOOGLE_SITE_VERIFICATION =
+  process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ??
+  "6RAYIm_YIVQG7vSlyvTqKVWHbBA7LJSIeO_OA5iFWoY";
+
 export const SITE_NAME = "Your-UniVerse";
 
 /** Alternate spellings people search for */
@@ -168,14 +173,10 @@ export const rootMetadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
-  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-    ? {
-        verification: {
-          google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-          ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
-            ? { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION } }
-            : {}),
-        },
-      }
-    : {}),
+  verification: {
+    google: GOOGLE_SITE_VERIFICATION,
+    ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+      ? { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION } }
+      : {}),
+  },
 };
