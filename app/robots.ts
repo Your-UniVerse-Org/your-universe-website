@@ -1,7 +1,11 @@
 import type { MetadataRoute } from "next";
-import { BASE_URL } from "@/lib/seo";
+
+function siteUrl(): string {
+  return (process.env.NEXT_PUBLIC_BASE_URL ?? "https://youruniverse.co.za").replace(/\/$/, "");
+}
 
 export default function robots(): MetadataRoute.Robots {
+  const base = siteUrl();
   return {
     rules: [
       {
@@ -10,7 +14,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/_next/"],
       },
     ],
-    sitemap: `${BASE_URL}/sitemap.xml`,
-    host: BASE_URL,
+    sitemap: `${base}/sitemap.xml`,
+    host: base,
   };
 }
