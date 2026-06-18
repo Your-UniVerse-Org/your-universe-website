@@ -1,11 +1,24 @@
 import type { MetadataRoute } from "next";
+import { headers } from "next/headers";
 
-function siteUrl(): string {
-  return (process.env.NEXT_PUBLIC_BASE_URL ?? "https://youruniverse.co.za").replace(/\/$/, "");
+async function siteUrl(): Promise<string> {
+  const configured = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/$/, "");
+  if (configured) return configured;
+
+  try {
+    const h = await headers();
+    const host = h.get("x-forwarded-host") ?? h.get("host");
+    const proto = h.get("x-forwarded-proto") ?? "https";
+    if (host) return `${proto}://${host}`;
+  } catch {
+    /* headers() unavailable during static generation */
+  }
+
+  return "https://your-universe-five.vercel.app";
 }
 
-export default function robots(): MetadataRoute.Robots {
-  const base = siteUrl();
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const base = await siteUrl();
   return {
     rules: [
       {
