@@ -2,8 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Terms of Service" };
+export const metadata: Metadata = createPageMetadata({
+  title: "Terms of Service",
+  description:
+    "Terms of Service for Your-UniVerse (Your Universe), South Africa's educational decision intelligence platform operated by Lynxio Tech.",
+  path: "/terms",
+  keywords: ["your universe terms", "your universe legal"],
+});
 
 export default function Page() {
   return (

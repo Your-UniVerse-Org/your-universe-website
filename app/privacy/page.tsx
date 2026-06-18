@@ -2,8 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Privacy Policy" };
+export const metadata: Metadata = createPageMetadata({
+  title: "Privacy Policy",
+  description:
+    "Your-UniVerse (Your Universe) privacy policy. How we collect, use, and protect your data in compliance with POPIA. Contact privacy@youruniversehub.com.",
+  path: "/privacy",
+  keywords: ["your universe privacy", "your universe data protection"],
+});
 
 export default function Page() {
   return (
@@ -40,8 +47,8 @@ export default function Page() {
             <p>We process personal information in accordance with the Protection of Personal Information Act 4 of 2013 (POPIA). You have the right to access, correct, and request deletion of your personal information at any time. To exercise these rights, contact us at <a href="mailto:privacy@youruniversehub.com" style={{ color: "var(--blue)" }}>privacy@youruniversehub.com</a>.</p>
           </section>
           <section>
-            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-1)", marginBottom: 16 }}>6. Cookies</h2>
-            <p>This landing page uses analytics cookies (if Google Analytics is enabled) to understand how visitors interact with the site. No personal information is stored in cookies. You may disable cookies in your browser settings at any time.</p>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-1)", marginBottom: 16 }}>6. Cookies &amp; analytics</h2>
+            <p>This site uses Google Analytics (when enabled) to understand how visitors interact with Your-UniVerse. Analytics cookies collect anonymised usage data such as pages visited and session duration. No personally identifiable information is stored in analytics cookies. You may disable cookies in your browser settings at any time.</p>
           </section>
           <section>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-1)", marginBottom: 16 }}>7. Contact</h2>

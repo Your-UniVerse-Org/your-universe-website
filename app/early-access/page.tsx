@@ -1,14 +1,7 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Waitlist from "@/components/Waitlist";
 import Footer from "@/components/Footer";
 import { LaunchHeroGraphic } from "@/components/SectionGraphics";
-
-export const metadata: Metadata = {
-  title: "Request Early Access",
-  description:
-    "Join the waitlist for Your-UniVerse, South Africa's first AI-powered educational decision intelligence platform. Free for every student, always.",
-};
 
 export default function EarlyAccessPage() {
   return (

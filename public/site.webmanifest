@@ -1,11 +1,13 @@
 {
-  "name": "Your-UniVerse",
+  "name": "Your-UniVerse | Your Universe",
   "short_name": "Your-UniVerse",
-  "description": "South Africa's first educational decision intelligence platform.",
+  "description": "Your Universe — South Africa's first educational decision intelligence platform. AI career guidance from Grade 9 to graduation.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#03050E",
-  "theme_color": "#3D7FFF",
+  "theme_color": "#774DFF",
+  "lang": "en-ZA",
+  "categories": ["education", "productivity"],
   "icons": [
     {
       "src": "/favicon.svg",
