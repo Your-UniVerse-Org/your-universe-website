@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { BASE_URL } from "@/lib/seo";
 
 const PAGES: { path: string; changefreq: string; priority: string }[] = [
-  { path: "", changefreq: "weekly", priority: "1.0" },
+  { path: "/", changefreq: "weekly", priority: "1.0" },
   { path: "/platform", changefreq: "weekly", priority: "0.9" },
   { path: "/for-schools", changefreq: "weekly", priority: "0.8" },
   { path: "/early-access", changefreq: "weekly", priority: "0.8" },
@@ -10,17 +11,6 @@ const PAGES: { path: string; changefreq: string; priority: string }[] = [
   { path: "/privacy", changefreq: "yearly", priority: "0.3" },
   { path: "/terms", changefreq: "yearly", priority: "0.3" },
 ];
-
-function siteUrl(request: NextRequest): string {
-  const configured = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/$/, "");
-  if (configured) return configured;
-
-  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
-  const proto = request.headers.get("x-forwarded-proto") ?? "https";
-  if (host) return `${proto}://${host}`;
-
-  return "https://your-universe-five.vercel.app";
-}
 
 function xmlEscape(value: string): string {
   return value
@@ -31,13 +21,12 @@ function xmlEscape(value: string): string {
     .replace(/'/g, "&apos;");
 }
 
-export function GET(request: NextRequest) {
-  const base = siteUrl(request);
+export function GET() {
   const lastmod = new Date().toISOString();
 
   const urls = PAGES.map(
     ({ path, changefreq, priority }) => `  <url>
-    <loc>${xmlEscape(`${base}${path}`)}</loc>
+    <loc>${xmlEscape(`${BASE_URL}${path}`)}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>

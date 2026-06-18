@@ -48,7 +48,7 @@ export default function Page() {
           </section>
           <section>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 18, fontWeight: 600, color: "var(--text-1)", marginBottom: 16 }}>6. Contact</h2>
-            <p>Questions about these terms may be directed to <a href="mailto:legal@youruniverse.co.za" style={{ color: "var(--blue)" }}>legal@youruniverse.co.za</a>.</p>
+            <p>Questions about these terms may be directed to <a href="mailto:legal@youruniversehub.com" style={{ color: "var(--blue)" }}>legal@youruniversehub.com</a>.</p>
           </section>
         </div>
       </div>

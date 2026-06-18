@@ -34,7 +34,7 @@ export default function SiteJsonLd() {
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "customer support",
-        email: "hello@youruniverse.co.za",
+        email: "hello@youruniversehub.com",
         availableLanguage: ["English", "Afrikaans"],
         areaServed: "ZA",
       },

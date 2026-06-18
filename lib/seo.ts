@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
-/** Canonical public site URL — set NEXT_PUBLIC_BASE_URL in Vercel to your live domain */
-export const BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL ?? "https://youruniverse.co.za";
+/** Canonical public site URL — https://www.youruniversehub.com */
+export const BASE_URL = (
+  process.env.NEXT_PUBLIC_BASE_URL ?? "https://www.youruniversehub.com"
+).replace(/\/$/, "");
 
 /** Google Analytics 4 measurement ID (public — safe in client bundle) */
 export const GA_MEASUREMENT_ID =

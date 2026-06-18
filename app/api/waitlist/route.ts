@@ -34,7 +34,7 @@ async function sendEmail(to: string, subject: string, html: string) {
     method: "POST",
     headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      from: "YourUniverse <noreply@youruniverse.co.za>",
+      from: "Your-UniVerse <noreply@youruniversehub.com>",
       to,
       subject,
       html,
@@ -56,7 +56,7 @@ function logEntry(entry: WaitlistEntry) {
   } catch { /* non-fatal on serverless */ }
 }
 
-const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL ?? "hello@youruniverse.co.za";
+const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL ?? "hello@youruniversehub.com";
 
 export async function POST(req: NextRequest) {
   try {
@@ -125,7 +125,7 @@ export async function POST(req: NextRequest) {
           }
         </p>
         <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;margin-top:24px">
-          <p style="color:#475569;font-size:13px;margin:0">Questions? Reply to this email or reach us at <a href="mailto:hello@youruniverse.co.za" style="color:#774DFF">hello@youruniverse.co.za</a></p>
+          <p style="color:#475569;font-size:13px;margin:0">Questions? Reply to this email or reach us at <a href="mailto:hello@youruniversehub.com" style="color:#774DFF">hello@youruniversehub.com</a></p>
           <p style="color:#475569;font-size:11px;margin:12px 0 0">A Lynxio Tech product &middot; Built in South Africa</p>
         </div>
       </div>`

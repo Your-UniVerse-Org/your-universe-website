@@ -96,12 +96,12 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} YourUniverse. {t("foot_copyright")}
           </p>
           <a
-            href="mailto:hello@youruniverse.co.za"
+            href="mailto:hello@youruniversehub.com"
             style={{ fontSize: 13, color: "var(--text-3)", fontFamily: "'Space Grotesk', sans-serif", transition: "color 0.2s" }}
             onMouseEnter={(e) => { (e.target as HTMLElement).style.color = "var(--text-1)"; }}
             onMouseLeave={(e) => { (e.target as HTMLElement).style.color = "var(--text-3)"; }}
           >
-            hello@youruniverse.co.za
+            hello@youruniversehub.com
           </a>
         </div>
       </div>
