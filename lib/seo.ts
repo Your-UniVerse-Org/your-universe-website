@@ -4,6 +4,12 @@ import type { Metadata } from "next";
 export const BASE_URL =
   process.env.NEXT_PUBLIC_BASE_URL ?? "https://youruniverse.co.za";
 
+/** Google Analytics 4 measurement ID (public — safe in client bundle) */
+export const GA_MEASUREMENT_ID =
+  process.env.NEXT_PUBLIC_GA_ID ??
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ??
+  "G-TZETZE06WE";
+
 export const SITE_NAME = "Your-UniVerse";
 
 /** Alternate spellings people search for */

@@ -4,14 +4,12 @@ import ClientShell from "../components/ClientShell";
 import ElectricBeams from "../components/ElectricBeams";
 import Analytics from "../components/seo/Analytics";
 import SiteJsonLd from "../components/seo/SiteJsonLd";
-import { rootMetadata } from "../lib/seo";
+import { GA_MEASUREMENT_ID, rootMetadata } from "../lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = rootMetadata;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const gaId = process.env.NEXT_PUBLIC_GA_ID ?? process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
-
   return (
     <html lang="en-ZA" suppressHydrationWarning data-theme="light">
       <head>
@@ -33,9 +31,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ElectricBeams />
           <ClientShell>{children}</ClientShell>
         </div>
-        {gaId ? (
+        {GA_MEASUREMENT_ID ? (
           <Suspense fallback={null}>
-            <Analytics gaId={gaId} />
+            <Analytics gaId={GA_MEASUREMENT_ID} />
           </Suspense>
         ) : null}
       </body>
