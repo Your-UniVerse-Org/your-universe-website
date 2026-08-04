@@ -2,35 +2,36 @@ import {
   BASE_URL,
   DEFAULT_DESCRIPTION,
   SITE_ALTERNATE_NAMES,
+  SITE_HUB_NAME,
   SITE_NAME,
   LYNXIO_URL,
+  PRIMARY_KEYWORDS,
 } from "@/lib/seo";
 import JsonLd from "./JsonLd";
 
-/** Global structured data: Organization, WebSite, SoftwareApplication, Person (Abisola) */
+/** Global structured data: Organization, EducationalOrganization, WebSite, SoftwareApplication */
 export default function SiteJsonLd() {
   const graph = [
     {
-      "@type": "Organization",
+      "@type": ["Organization", "EducationalOrganization"],
       "@id": `${BASE_URL}/#organization`,
-      name: SITE_NAME,
-      alternateName: [...SITE_ALTERNATE_NAMES],
+      name: SITE_HUB_NAME,
+      alternateName: [...SITE_ALTERNATE_NAMES, SITE_NAME],
       url: BASE_URL,
       logo: {
         "@type": "ImageObject",
         url: `${BASE_URL}/your%20universe%20logo.svg`,
       },
       description: DEFAULT_DESCRIPTION,
-      foundingLocation: {
-        "@type": "Place",
-        name: "South Africa",
-      },
+      keywords: [...PRIMARY_KEYWORDS].join(", "),
+      foundingLocation: { "@type": "Place", name: "South Africa" },
+      areaServed: { "@type": "Country", name: "South Africa" },
       parentOrganization: {
         "@type": "Organization",
         name: "Lynxio Tech",
         url: LYNXIO_URL,
       },
-      sameAs: [LYNXIO_URL],
+      sameAs: [LYNXIO_URL, BASE_URL],
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "customer support",
@@ -42,8 +43,8 @@ export default function SiteJsonLd() {
     {
       "@type": "WebSite",
       "@id": `${BASE_URL}/#website`,
-      name: SITE_NAME,
-      alternateName: [...SITE_ALTERNATE_NAMES, "your universe", "Abisola your universe"],
+      name: SITE_HUB_NAME,
+      alternateName: [...SITE_ALTERNATE_NAMES],
       url: BASE_URL,
       description: DEFAULT_DESCRIPTION,
       inLanguage: ["en-ZA", "af-ZA"],
@@ -60,12 +61,21 @@ export default function SiteJsonLd() {
     {
       "@type": "SoftwareApplication",
       "@id": `${BASE_URL}/#application`,
-      name: SITE_NAME,
-      alternateName: [...SITE_ALTERNATE_NAMES],
+      name: SITE_HUB_NAME,
+      alternateName: [...SITE_ALTERNATE_NAMES, SITE_NAME],
       applicationCategory: "EducationalApplication",
+      applicationSubCategory: "Career Guidance",
       operatingSystem: "Web",
       url: BASE_URL,
       description: DEFAULT_DESCRIPTION,
+      featureList: [
+        "Grade 9 subject selection guidance",
+        "APS calculator and tracking",
+        "Psychometric career testing",
+        "University guidance South Africa",
+        "TVET career pathways",
+        "School career counselling",
+      ],
       offers: {
         "@type": "Offer",
         price: "0",
@@ -74,7 +84,7 @@ export default function SiteJsonLd() {
       },
       audience: {
         "@type": "EducationalAudience",
-        educationalRole: "student",
+        educationalRole: ["student", "parent", "teacher", "administrator"],
       },
       provider: { "@id": `${BASE_URL}/#organization` },
     },
@@ -84,10 +94,10 @@ export default function SiteJsonLd() {
       name: "Abisola",
       jobTitle: "Creative Director",
       description:
-        "Abisola provides the design vision and creative direction behind Your-UniVerse (Your Universe), South Africa's educational decision intelligence platform.",
+        "Abisola provides the design vision behind Your Universe Hub — South Africa's educational decision intelligence platform.",
       knowsAbout: [
         "Your Universe",
-        "Your-UniVerse",
+        "Your Universe Hub",
         "education technology",
         "career guidance",
         "user experience design",

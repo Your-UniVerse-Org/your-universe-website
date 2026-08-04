@@ -2,19 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { createPageMetadata } from "@/lib/seo";
+import PageStructuredData from "@/components/seo/PageStructuredData";
+import { createPageMetadataFromKey } from "@/lib/seo";
 
-export const metadata: Metadata = createPageMetadata({
-  title: "Privacy Policy",
-  description:
-    "Your-UniVerse (Your Universe) privacy policy. How we collect, use, and protect your data in compliance with POPIA. Contact privacy@youruniversehub.com.",
-  path: "/privacy",
-  keywords: ["your universe privacy", "your universe data protection"],
-});
+export const metadata: Metadata = createPageMetadataFromKey("privacy");
 
 export default function Page() {
   return (
     <div style={{ background: "var(--bg)", minHeight: "100vh" }}>
+      <PageStructuredData pageKey="privacy" />
       <Navbar />
       <div style={{ paddingTop: 120, paddingBottom: 120 }}>
       <div className="container" style={{ maxWidth: 760 }}>

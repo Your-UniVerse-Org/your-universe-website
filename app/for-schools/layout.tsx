@@ -1,18 +1,14 @@
 import type { Metadata } from "next";
-import { createPageMetadata } from "@/lib/seo";
+import { createPageMetadataFromKey } from "@/lib/seo";
+import PageStructuredData from "@/components/seo/PageStructuredData";
 
-export const metadata: Metadata = createPageMetadata({
-  title: "For Schools & Institutions",
-  description:
-    "Your-UniVerse (Your Universe) partners with South African schools, universities, and TVET colleges. Whole-school guidance infrastructure powered by decision intelligence.",
-  path: "/for-schools",
-  keywords: [
-    "your universe schools",
-    "your universe institutions",
-    "your universe universities",
-  ],
-});
+export const metadata: Metadata = createPageMetadataFromKey("forSchools");
 
 export default function ForSchoolsLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <PageStructuredData pageKey="forSchools" />
+      {children}
+    </>
+  );
 }

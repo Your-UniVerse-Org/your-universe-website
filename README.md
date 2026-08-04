@@ -59,17 +59,23 @@ Open [http://localhost:3000](http://localhost:3000).
 Create a `.env.local` file:
 
 ```env
-# Required for waitlist email notifications (https://resend.com)
+# Required — Google Sheet webhook (see scripts/google-apps-script-waitlist.gs)
+GOOGLE_SHEETS_WEBHOOK_URL=https://script.google.com/macros/s/xxxxx/exec
+
+# Optional shared secret between Vercel and Apps Script
+GOOGLE_SHEETS_WEBHOOK_SECRET=your_random_secret
+
+# Optional — waitlist email notifications (https://resend.com)
 RESEND_API_KEY=re_your_key_here
 
-# Team notification email (default: hello@youruniverse.co.za)
-NOTIFY_EMAIL=hello@youruniverse.co.za
+# Team notification email (default: hello@youruniversehub.com)
+NOTIFY_EMAIL=hello@youruniversehub.com
 
 # Google Analytics (optional)
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 
-# Canonical base URL (default: https://youruniverse.co.za)
-NEXT_PUBLIC_BASE_URL=https://youruniverse.co.za
+# Canonical base URL (default: https://www.youruniversehub.com)
+NEXT_PUBLIC_BASE_URL=https://www.youruniversehub.com
 ```
 
 ## Project Structure

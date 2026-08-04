@@ -170,6 +170,8 @@ export default function Waitlist() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: `${data.firstName} ${data.surname}`.trim(),
+          firstName: data.firstName.trim(),
+          surname: data.surname.trim(),
           email: data.email.trim(),
           org: data.org.trim(),
           type: data.type,

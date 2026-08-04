@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { appendWaitlistRow, isSheetsConfigured } from "@/lib/google-sheets";
 
 /* Basic in-memory rate limit: 3 requests per IP per 60 seconds */
 const rateLimitMap = new Map<string, { count: number; reset: number }>();
@@ -19,6 +20,8 @@ function rateLimit(ip: string): boolean {
 interface WaitlistEntry {
   id: string;
   name: string;
+  firstName?: string;
+  surname?: string;
   email: string;
   org: string;
   type: string;
@@ -66,7 +69,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { name, email, org, type, profile } = body as Partial<WaitlistEntry>;
+    const { name, firstName, surname, email, org, type, profile } = body as Partial<WaitlistEntry>;
 
     if (!name?.trim() || !email?.trim() || !type?.trim()) {
       return NextResponse.json({ error: "Name, email, and type are required." }, { status: 400 });
@@ -79,6 +82,8 @@ export async function POST(req: NextRequest) {
     const entry: WaitlistEntry = {
       id: crypto.randomUUID(),
       name: name.trim(),
+      firstName: firstName?.trim(),
+      surname: surname?.trim(),
       email: email.trim().toLowerCase(),
       org: org?.trim() ?? "",
       type: type.trim(),
@@ -89,6 +94,19 @@ export async function POST(req: NextRequest) {
 
     // Log to file (works locally, no-op on Vercel read-only fs)
     logEntry(entry);
+
+    // Persist to company Google Sheet (primary destination in production)
+    const sheetResult = await appendWaitlistRow(entry);
+    if (isSheetsConfigured() && !sheetResult.ok) {
+      console.error("[waitlist] Google Sheets failed:", sheetResult.reason);
+      return NextResponse.json(
+        { error: "We could not save your registration. Please try again shortly." },
+        { status: 503 }
+      );
+    }
+    if (!isSheetsConfigured()) {
+      console.warn("[waitlist] GOOGLE_SHEETS_WEBHOOK_URL not set — submissions are not being saved to Google Sheets");
+    }
 
     // Notify team
     await sendEmail(

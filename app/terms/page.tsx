@@ -2,19 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { createPageMetadata } from "@/lib/seo";
+import PageStructuredData from "@/components/seo/PageStructuredData";
+import { createPageMetadataFromKey } from "@/lib/seo";
 
-export const metadata: Metadata = createPageMetadata({
-  title: "Terms of Service",
-  description:
-    "Terms of Service for Your-UniVerse (Your Universe), South Africa's educational decision intelligence platform operated by Lynxio Tech.",
-  path: "/terms",
-  keywords: ["your universe terms", "your universe legal"],
-});
+export const metadata: Metadata = createPageMetadataFromKey("terms");
 
 export default function Page() {
   return (
     <div style={{ background: "var(--bg)", minHeight: "100vh" }}>
+      <PageStructuredData pageKey="terms" />
       <Navbar />
       <div style={{ paddingTop: 120, paddingBottom: 120 }}>
       <div className="container" style={{ maxWidth: 760 }}>

@@ -1,16 +1,5 @@
 import { NextResponse } from "next/server";
-import { BASE_URL } from "@/lib/seo";
-
-const PAGES: { path: string; changefreq: string; priority: string }[] = [
-  { path: "/", changefreq: "weekly", priority: "1.0" },
-  { path: "/platform", changefreq: "weekly", priority: "0.9" },
-  { path: "/for-schools", changefreq: "weekly", priority: "0.8" },
-  { path: "/early-access", changefreq: "weekly", priority: "0.8" },
-  { path: "/about", changefreq: "monthly", priority: "0.7" },
-  { path: "/careers", changefreq: "monthly", priority: "0.5" },
-  { path: "/privacy", changefreq: "yearly", priority: "0.3" },
-  { path: "/terms", changefreq: "yearly", priority: "0.3" },
-];
+import { BASE_URL, SITEMAP_PAGES } from "@/lib/seo";
 
 function xmlEscape(value: string): string {
   return value
@@ -24,7 +13,7 @@ function xmlEscape(value: string): string {
 export function GET() {
   const lastmod = new Date().toISOString();
 
-  const urls = PAGES.map(
+  const urls = SITEMAP_PAGES.map(
     ({ path, changefreq, priority }) => `  <url>
     <loc>${xmlEscape(`${BASE_URL}${path}`)}</loc>
     <lastmod>${lastmod}</lastmod>
