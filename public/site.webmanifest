@@ -1,10 +1,10 @@
 {
-  "name": "Your-UniVerse | Your Universe",
+  "name": "Your-UniVerse | Your Universe Hub",
   "short_name": "Your-UniVerse",
-  "description": "Your Universe — South Africa's first educational decision intelligence platform. AI career guidance from Grade 9 to graduation.",
+  "description": "Your Universe Hub — South Africa's educational decision intelligence platform.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#03050E",
+  "background_color": "#FFFFFF",
   "theme_color": "#774DFF",
   "lang": "en-ZA",
   "categories": ["education", "productivity"],
@@ -12,7 +12,20 @@
     {
       "src": "/favicon.svg",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-icon",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

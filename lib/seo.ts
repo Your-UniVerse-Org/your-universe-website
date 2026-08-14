@@ -400,10 +400,10 @@ export const rootMetadata: Metadata = {
   formatDetection: { email: false, address: false, telephone: false },
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.svg", type: "image/svg+xml", sizes: "any" },
+      { url: "/icon", type: "image/png", sizes: "32x32" },
     ],
-    apple: "/apple-touch-icon.png",
+    apple: [{ url: "/apple-icon", type: "image/png", sizes: "180x180" }],
   },
   manifest: "/site.webmanifest",
   verification: {
